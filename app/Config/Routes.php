@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+// $routes->get('/', 'Home::index');
 
 $routes->group("api/users", function($routes){
 
@@ -19,3 +19,4 @@ $routes->group("api/leads", function($routes){
     $routes->get('update','Api\Lead\CreateLeadController::update');
 }
 );
+

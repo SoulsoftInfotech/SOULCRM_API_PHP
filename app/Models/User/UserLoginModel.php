@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
 use CodeIgniter\Model;
 
@@ -33,9 +33,12 @@ class UserLoginModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    protected $beforeInsert   = ['hashPassword'];
+    
+    protected $beforeInsert   = [];
+    // protected $beforeInsert   = ['hashPassword'];
     protected $afterInsert    = [];
-    protected $beforeUpdate   = ['hashPassword'];
+    protected $beforeUpdate   = [];
+    // protected $beforeUpdate   = ['hashPassword'];
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
     protected $afterFind      = [];
@@ -48,12 +51,12 @@ class UserLoginModel extends Model
         $this->db = \Config\Database::connect();
         // OR $this->db = db_connect();
     }
-    protected function hashPassword(array $data)
-    {
-        if (isset($data['data']['Password'])) {
-            $data['data']['Password'] = password_hash($data['data']['Password'], PASSWORD_DEFAULT);
-        }
+    // protected function hashPassword(array $data)
+    // {
+    //     if (isset($data['data']['Password'])) {
+    //         $data['data']['Password'] = password_hash($data['data']['Password'], PASSWORD_DEFAULT);
+    //     }
 
-        return $data;
-    }
+    //     return $data;
+    // }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Api\Lead;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\CreateLeadModel;
+use App\Models\Lead\CreateLeadModel;
 
 class CreateLeadController extends BaseController
 {

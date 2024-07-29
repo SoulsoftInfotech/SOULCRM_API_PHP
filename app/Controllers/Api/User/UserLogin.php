@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Api\User;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-use App\Models\UserLoginModel;
+use App\Models\User\UserLoginModel;
 
 class UserLogin extends BaseController
 {
@@ -53,8 +52,12 @@ class UserLogin extends BaseController
         $password = $this->request->getVar('Password');
 
         $user = $userLoginModel->where('LoginUserName', $loginUserName)->first();
+        // $passwordmatch=$userLoginModel->where('Password', $password);
+        // print_r($user);
+        // print_r($passwordmatch);
+        // print_r($user);
 
-        if ($user && password_verify($password, $user['Password'])) {
+        if ($user && $user['Password']=== $password) {
             // Generate token or session here
             return $this->response->setJSON([
                 'status' => 200,

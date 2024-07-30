@@ -28,7 +28,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'https://soulcrm.soulsoft.in/',
+        'hostname'     => 'soulcrm.soulsoft.in',
         'username'     => 'u311423116_soulcrm',
         'password'     => 'a^AY3v9X',
         'database'     => 'u311423116_soulcrm',
@@ -46,6 +46,7 @@ class Database extends Config
         'port'         => 3306,
         'numberNative' => false,
     ];
+    // 'hostname'     => 'https://soulcrm.soulsoft.in/',
 // 'database'     => 'soul_crm'
     /**
      * This database connection is used when

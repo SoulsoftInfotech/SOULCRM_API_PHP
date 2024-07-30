@@ -28,10 +28,10 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => 'root',
-        'password'     => '',
-        'database'     => 'soul_crm',
+        'hostname'     => 'https://soulcrm.soulsoft.in/',
+        'username'     => 'u311423116_soulcrm',
+        'password'     => 'a^AY3v9X',
+        'database'     => 'u311423116_soulcrm',
         'DBDriver'     => 'MySQLi',
         'DBPrefix'     => '',
         'pConnect'     => false,
@@ -46,7 +46,7 @@ class Database extends Config
         'port'         => 3306,
         'numberNative' => false,
     ];
-
+// 'database'     => 'soul_crm'
     /**
      * This database connection is used when
      * running PHPUnit database tests.

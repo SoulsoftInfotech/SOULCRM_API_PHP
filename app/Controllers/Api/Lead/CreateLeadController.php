@@ -172,7 +172,7 @@ public function getLeadById($id)
                     'InstallationDate' => $this->request->getVar('InstallationDate') // Take as input
                 ];
     
-                // Check if customer data is valid before inserting
+                // Check if customer data is valid before inserting.
                 if (empty($customerData['BookingAmount']) || !is_numeric($customerData['BookingAmount'])) {
                     return $this->response->setJSON([
                         'status' => 400,

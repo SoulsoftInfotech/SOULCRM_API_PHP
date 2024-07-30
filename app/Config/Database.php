@@ -28,7 +28,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'soulcrm.soulsoft.in',
+        'hostname'     => 'localhost',
         'username'     => 'u311423116_soulcrm',
         'password'     => 'a^AY3v9X',
         'database'     => 'u311423116_soulcrm',

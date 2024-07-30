@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class CreateLeadModel extends Model
 {
-    protected $table            = 'leads';
-    protected $primaryKey       = 'id';
+    protected $table            = 'Leads';
+    protected $primaryKey       = 'LeadId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [  'LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
+    protected $allowedFields    = ['LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
     'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
     'Narration', 'LeadStatus', 'HandlerEmp', 'CreatedBy', 'CreatedOn', 
     'UpdatedBy', 'UpdatedOn'];

@@ -98,12 +98,32 @@ class CreateLeadController extends BaseController
     $leadModel = new CreateLeadModel();
 
     // Fetch all lead records from the model
-    $leads = $leadModel->findAll();
+    $leads = $leadModel->getAllLeads();
 
     if ($leads) {
         return $this->response->setJSON([
             'status' => 200,
             'message' => 'Leads retrieved successfully',
+            'data' => $leads
+        ]);
+    }
+
+    return $this->response->setJSON([
+        'status' => 404,
+        'message' => 'No leads found'
+    ]);
+}
+public function getAllLeadswithCustomer()
+{
+    $leadModel = new CreateLeadModel();
+
+    // Fetch all lead records from the model
+    $leads = $leadModel->findAll();
+
+    if ($leads) {
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Leads and customer retrieved successfully',
             'data' => $leads
         ]);
     }

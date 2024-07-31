@@ -98,7 +98,7 @@ class CreateLeadController extends BaseController
     $leadModel = new CreateLeadModel();
 
     // Fetch all lead records from the model
-    $leads = $leadModel->getAllLeads();
+    $leads = $leadModel->getAllLeadsModel();
 
     if ($leads) {
         return $this->response->setJSON([

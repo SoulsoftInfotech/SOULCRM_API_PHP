@@ -51,7 +51,7 @@ class CreateLeadModel extends Model
     }
     public function getAllLeads(){
         $leadmodel = new CreateLeadModel();
-        $data = $leadmodel->select('*')->where('LeadType', 'Lead')->findAll();
+        $data = $leadmodel->select('*')->where('LeadStatus', 'Lead')->findAll();
        return $data;
     }
 }

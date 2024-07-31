@@ -49,7 +49,7 @@ class CreateLeadModel extends Model
         $this->db = \Config\Database::connect();
         // OR $this->db = db_connect();
     }
-    public function getAllLeads(){
+    public function getAllLeadsModel(){
         $leadmodel = new CreateLeadModel();
         $data = $leadmodel->select('*')->where('LeadStatus', 'Lead')->findAll();
        return $data;

@@ -50,8 +50,6 @@ class CreateLeadModel extends Model
         // OR $this->db = db_connect();
     }
     public function getAllLeadsModel(){
-        $leadmodel = new CreateLeadModel();
-        $data = $leadmodel->select('*')->where('LeadStatus', 'Lead')->findAll();
-       return $data;
+        return $this->where('LeadStatus','Lead')->findAll();
     }
 }

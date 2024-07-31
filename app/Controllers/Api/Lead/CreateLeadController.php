@@ -303,17 +303,22 @@ public function itemExcelUpload()
             ];
 
             // Extract column names and data
-            $columnNames = $excelData[0];
+            $columnNames = array_filter($excelData[0], 'is_string'); // Ensure column names are strings
             $rowData = [];
 
             // Create a mapping of column names to target fields
-            $columnMapping = array_flip($columnNames);
+            $columnMapping = [];
+            foreach ($columnNames as $index => $name) {
+                if (in_array($name, $targetFields)) {
+                    $columnMapping[$name] = $index;
+                }
+            }
 
             for ($i = 1; $i < count($excelData); $i++) {
                 $row = $excelData[$i];
                 $rowAsKeyValue = [];
 
-                foreach ($targetFields as $index => $field) {
+                foreach ($targetFields as $field) {
                     if (isset($columnMapping[$field])) {
                         $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
                     } else {
@@ -359,5 +364,6 @@ public function itemExcelUpload()
         return $this->response->setJSON($response);
     }
 }
+
 
 }

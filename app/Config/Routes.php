@@ -10,7 +10,7 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group("api/users", function($routes){
 
     $routes->post('createuser','Api\User\UserLogin::create');
-    $routes->get('login','Api\User\UserLogin::login');
+    $routes->post('login','Api\User\UserLogin::login');
 }
 );
 $routes->group("api/leads", function($routes){

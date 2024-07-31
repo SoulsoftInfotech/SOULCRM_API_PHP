@@ -12,7 +12,7 @@ class CreateLeadModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
+    protected $allowedFields    = ['LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
     'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
     'Narration', 'LeadStatus', 'HandlerEmp','Address','CreatedBy', 'CreatedOn', 
     'UpdatedBy', 'UpdatedOn'];
@@ -50,6 +50,7 @@ class CreateLeadModel extends Model
         // OR $this->db = db_connect();
     }
     public function getAllLeadsModel(){
+        $leadmodel = new CreateLeadModel();
         return $this->where('LeadStatus','Lead')->findAll();
     }
 }

@@ -273,71 +273,91 @@ public function getLeadById($id)
     ]);
 }
 
-    public function itemExcelUpload()
-    {
-        // Check if file is uploaded
-        if ($this->request->getFile('excel_file')->isValid()) {
-            $file = $this->request->getFile('excel_file');
-            $extension = $file->getExtension();
-            if ($extension == 'xlsx' || $extension == 'csv') {
+public function itemExcelUpload()
+{
+    // Check if file is uploaded
+    if ($this->request->getFile('excel_file')->isValid()) {
+        $file = $this->request->getFile('excel_file');
+        $extension = $file->getExtension();
+        if ($extension == 'xlsx' || $extension == 'csv') {
 
-                if ($extension == 'xlsx') {
-                    $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file->getTempName());
-                    $worksheet = $spreadsheet->getActiveSheet();
-                    $excelData = $worksheet->toArray();
-                } else {
-                    $file = fopen($file->getTempName(), 'r');
-                    $excelData = [];
-                    while (($row = fgetcsv($file)) !== false) {
-                        $excelData[] = $row;
-                    }
-                    fclose($file);
-                }
-                $columnNames = $excelData[0];
-
-                $rowData = [];
-
-                for ($i = 1; $i < count($excelData); $i++) {
-                    $row = $excelData[$i];
-                    $rowAsKeyValue = [];
-                    for ($j = 0; $j < count($row); $j++) {
-                        $rowAsKeyValue[$columnNames[$j]] = $row[$j];
-                    }
-                    $rowData[] = $rowAsKeyValue;
-                }
-
-                $CreateLeadModel = new CreateLeadModel();
-                if ($CreateLeadModel->insertBatch($rowData)) {
-                    // Respond with success message and the data
-                    $response = [
-                        'status' => 200,
-                        'msg' => 'Excel file data saved successfully!',
-                        'data' => $rowData,
-                    ];
-                    return $this->response->setJSON($response);
-                } else {
-                    // Respond with error message if saving failed
-                    $response = [
-                        'status' => 500,
-                        'msg' => 'Failed to save Excel file data.',
-                    ];
-                    return $this->response->setJSON($response);
-                }
+            if ($extension == 'xlsx') {
+                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file->getTempName());
+                $worksheet = $spreadsheet->getActiveSheet();
+                $excelData = $worksheet->toArray();
             } else {
-                // Respond with error if file is not Excel or CSV
+                $file = fopen($file->getTempName(), 'r');
+                $excelData = [];
+                while (($row = fgetcsv($file)) !== false) {
+                    $excelData[] = $row;
+                }
+                fclose($file);
+            }
+
+            // Define the target fields
+            $targetFields = [
+                'LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
+                'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
+                'Narration', 'LeadStatus', 'HandlerEmp', 'Address', 'CreatedBy', 
+                'CreatedOn', 'UpdatedBy', 'UpdatedOn'
+            ];
+
+            // Extract column names and data
+            $columnNames = $excelData[0];
+            $rowData = [];
+
+            // Create a mapping of column names to target fields
+            $columnMapping = array_flip($columnNames);
+
+            for ($i = 1; $i < count($excelData); $i++) {
+                $row = $excelData[$i];
+                $rowAsKeyValue = [];
+
+                foreach ($targetFields as $index => $field) {
+                    if (isset($columnMapping[$field])) {
+                        $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
+                    } else {
+                        // Handle missing columns by setting default values or skipping
+                        $rowAsKeyValue[$field] = null; // or some default value
+                    }
+                }
+
+                $rowData[] = $rowAsKeyValue;
+            }
+
+            $CreateLeadModel = new CreateLeadModel();
+            if ($CreateLeadModel->insertBatch($rowData)) {
+                // Respond with success message and the data
                 $response = [
-                    'status' => 400,
-                    'msg' => 'Uploaded file must be in Excel format (xlsx) or CSV.',
+                    'status' => 200,
+                    'msg' => 'Excel file data saved successfully!',
+                    'data' => $rowData,
+                ];
+                return $this->response->setJSON($response);
+            } else {
+                // Respond with error message if saving failed
+                $response = [
+                    'status' => 500,
+                    'msg' => 'Failed to save Excel file data.',
                 ];
                 return $this->response->setJSON($response);
             }
         } else {
-            // Respond with error if no file is uploaded or file upload failed
+            // Respond with error if file is not Excel or CSV
             $response = [
                 'status' => 400,
-                'msg' => 'No file uploaded or file upload failed.',
+                'msg' => 'Uploaded file must be in Excel format (xlsx) or CSV.',
             ];
             return $this->response->setJSON($response);
         }
+    } else {
+        // Respond with error if no file is uploaded or file upload failed
+        $response = [
+            'status' => 400,
+            'msg' => 'No file uploaded or file upload failed.',
+        ];
+        return $this->response->setJSON($response);
     }
+}
+
 }

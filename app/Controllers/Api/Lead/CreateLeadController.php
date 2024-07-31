@@ -34,6 +34,7 @@ class CreateLeadController extends BaseController
             'Narration' => $this->request->getVar('Narration'),
             'LeadStatus' => $this->request->getVar('LeadStatus'),
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
+            'Address'=>$this->request->getVar('Address'),
             'CreatedBy' => $this->request->getVar('CreatedBy'),
             'CreatedOn' => date('Y-m-d H:i:s'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
@@ -73,6 +74,7 @@ class CreateLeadController extends BaseController
             'Narration' => $this->request->getVar('Narration'),
             'LeadStatus' => $this->request->getVar('LeadStatus'),
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
+            'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
             'UpdatedOn' => date('Y-m-d H:i:s'),
         ];
@@ -155,6 +157,7 @@ public function getLeadById($id)
             'Narration' => $this->request->getVar('Narration'),
             'LeadStatus' => $this->request->getVar('LeadStatus'),
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
+            'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
             'UpdatedOn' => date('Y-m-d H:i:s'),
         ];

@@ -214,12 +214,7 @@ public function getLeadById($id)
                         'message' => 'Failed to create customer record'
                     ]);
                 }
-                if (!$leadModel->delete($id)) {
-                    return $this->response->setJSON([
-                        'status' => 500,
-                        'message' => 'Failed to delete lead after creating customer record'
-                    ]);
-                }
+               
             }
     
             return $this->response->setJSON([

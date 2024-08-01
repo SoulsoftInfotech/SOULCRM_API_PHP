@@ -21,8 +21,17 @@ class JWTAuthFilter implements FilterInterface
 
         $token = str_replace('Bearer ', '', $authHeader);
 
+        // Retrieve the secret key from environment variables
+        $key = getenv('JWT_SECRET');
+        if (!$key) {
+            return service('response')
+                ->setJSON(['message' => 'Unauthorized: No secret key provided'])
+                ->setStatusCode(ResponseInterface::HTTP_UNAUTHORIZED);
+        }
+
         try {
-            $decoded = JWT::decode($token, new Key(getenv('fdsfsdf684454dgsgs464545646gs64461'), 'HS256'));
+            // Decode the JWT token
+            $decoded = JWT::decode($token, new Key($key, 'HS256'));
             // Optionally store user info in session or request object
         } catch (\Exception $e) {
             return service('response')

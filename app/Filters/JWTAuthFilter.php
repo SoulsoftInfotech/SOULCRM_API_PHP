@@ -22,7 +22,7 @@ class JWTAuthFilter implements FilterInterface
         $token = str_replace('Bearer ', '', $authHeader);
 
         try {
-            $decoded = JWT::decode($token, new Key(getenv('JWT_SECRET_KEY'), 'HS256'));
+            $decoded = JWT::decode($token, new Key(getenv('fdsfsdf684454dgsgs464545646gs64461'), 'HS256'));
             // Optionally store user info in session or request object
         } catch (\Exception $e) {
             return service('response')

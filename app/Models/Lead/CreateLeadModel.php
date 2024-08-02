@@ -15,7 +15,7 @@ class CreateLeadModel extends Model
     protected $allowedFields    = ['LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
     'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
     'Narration', 'LeadStatus', 'HandlerEmp','Address','CreatedBy', 'CreatedOn', 
-    'UpdatedBy', 'UpdatedOn'];
+    'UpdatedBy', 'UpdatedOn','NextFollowUpDate'];
 
     protected bool $allowEmptyInserts = false;
 

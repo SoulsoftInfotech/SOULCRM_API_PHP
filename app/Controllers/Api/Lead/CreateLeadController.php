@@ -39,6 +39,7 @@ class CreateLeadController extends BaseController
             'CreatedOn' => date('Y-m-d'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
             'UpdatedOn' => date('Y-m-d'),
+            'NextFollowUpDate' =>$this->request->getVar('NextFollowUpDate'),
         ];
 
         if ($leadModel->save($leadData)) {
@@ -77,6 +78,7 @@ class CreateLeadController extends BaseController
             'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
             'UpdatedOn' => date('Y-m-d'),
+            'NextFollowUpDate' =>$this->request->getVar('NextFollowUpDate'),
         ];
 
         if ($leadModel->update($id, $leadData)) {
@@ -180,6 +182,7 @@ public function getLeadById($id)
             'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
             'UpdatedOn' => date('Y-m-d'),
+            'NextFollowUpDate' =>$this->request->getVar('NextFollowUpDate'),
         ];
     
         if ($leadModel->update($id, $leadData)) {
@@ -299,7 +302,7 @@ public function itemExcelUpload()
                 'LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
                 'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
                 'Narration', 'LeadStatus', 'HandlerEmp', 'Address', 'CreatedBy', 
-                'CreatedOn', 'UpdatedBy', 'UpdatedOn'
+                'CreatedOn', 'UpdatedBy', 'UpdatedOn','NextFollowUpDate'
             ];
 
             // Extract column names and data

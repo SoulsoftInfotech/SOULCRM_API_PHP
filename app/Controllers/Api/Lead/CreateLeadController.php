@@ -36,9 +36,9 @@ class CreateLeadController extends BaseController
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
             'Address'=>$this->request->getVar('Address'),
             'CreatedBy' => $this->request->getVar('CreatedBy'),
-            'CreatedOn' => date('Y-m-d H:i:s'),
+            'CreatedOn' => date('Y-m-d'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d H:i:s'),
+            'UpdatedOn' => date('Y-m-d'),
         ];
 
         if ($leadModel->save($leadData)) {
@@ -76,7 +76,7 @@ class CreateLeadController extends BaseController
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
             'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d H:i:s'),
+            'UpdatedOn' => date('Y-m-d'),
         ];
 
         if ($leadModel->update($id, $leadData)) {
@@ -179,7 +179,7 @@ public function getLeadById($id)
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
             'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d H:i:s'),
+            'UpdatedOn' => date('Y-m-d'),
         ];
     
         if ($leadModel->update($id, $leadData)) {
@@ -187,7 +187,7 @@ public function getLeadById($id)
             if ($leadData['LeadType'] == 'Booking Done') {
                 // Prepare customer data
                 $customerData = [
-                    'BookingDate' => date('Y-m-d H:i:s'),
+                    'BookingDate' => date('Y-m-d'),
                     'LeadId' => $leadData['LeadId'],
                     'BookedByEmplId' => $leadData['HandlerEmp'],
                     'BookedForProductId' => $leadData['ProductId'],

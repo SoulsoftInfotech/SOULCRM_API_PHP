@@ -36,9 +36,9 @@ class CreateLeadController extends BaseController
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
             'Address'=>$this->request->getVar('Address'),
             'CreatedBy' => $this->request->getVar('CreatedBy'),
-            'CreatedOn' => date('Y-m-d H:i:s'),
+            'CreatedOn' => date('Y-m-d'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d H:i:s'),
+            'UpdatedOn' => date('Y-m-d'),
         ];
 
         if ($leadModel->save($leadData)) {

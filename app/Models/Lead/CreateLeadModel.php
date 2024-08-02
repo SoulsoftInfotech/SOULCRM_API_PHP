@@ -49,7 +49,23 @@ class CreateLeadModel extends Model
         $this->db = \Config\Database::connect();
         // OR $this->db = db_connect();
     }
-    public function getAllLeadsModel(){
-        return $this->where('LeadStatus','Lead')->findAll();
+    // public function getAllLeadsModel(){
+    //     return $this->where('LeadStatus','Lead')->findAll();
+    // }
+    public function getAllLeadsModel()
+    {
+        $leads = $this->where('LeadStatus', 'Lead')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($leads as &$lead) {
+            if (isset($lead['CreatedOn'])) {
+                $lead['CreatedOn'] = date('Y-m-d', strtotime($lead['CreatedOn']));
+            }
+            if (isset($lead['UpdatedOn'])) {
+                $lead['UpdatedOn'] = date('Y-m-d', strtotime($lead['UpdatedOn']));
+            }
+        }
+
+        return $leads;
     }
 }

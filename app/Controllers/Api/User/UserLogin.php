@@ -94,7 +94,7 @@ class UserLogin extends BaseController
             $response = [
                 'msg' => 'user login successfully!',
                 'userid' => $user['EmpId'],
-                'url' => 'https://api.soulsofterp.com/',
+                'url' => 'https://soulcrm.soulsoft.in/',
                 'type' => 'master',
                 'status' => 200,
                 'tokenDetails' => [

@@ -59,10 +59,10 @@ class CreateLeadModel extends Model
         // Format dates to only show the date part
         foreach ($leads as &$lead) {
             if (isset($lead['CreatedOn'])) {
-                $lead['CreatedOn'] = date('Y-m-d', strtotime($lead['CreatedOn']));
+                $lead['CreatedOn'] = date('d-m-Y', strtotime($lead['CreatedOn']));
             }
             if (isset($lead['UpdatedOn'])) {
-                $lead['UpdatedOn'] = date('Y-m-d', strtotime($lead['UpdatedOn']));
+                $lead['UpdatedOn'] = date('d-m-Y', strtotime($lead['UpdatedOn']));
             }
         }
 

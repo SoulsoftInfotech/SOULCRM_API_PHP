@@ -9,7 +9,8 @@ class UserLoginModel extends Model
     protected $db;
     protected $DBGroup          = 'default';
     protected $table            = 'employees';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'EmpId';
+    // protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;

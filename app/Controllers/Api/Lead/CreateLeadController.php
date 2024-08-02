@@ -314,13 +314,19 @@ public function itemExcelUpload()
                 }
             }
 
+            // Process each row of data
             for ($i = 1; $i < count($excelData); $i++) {
                 $row = $excelData[$i];
                 $rowAsKeyValue = [];
 
                 foreach ($targetFields as $field) {
                     if (isset($columnMapping[$field])) {
-                        $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
+                        // For 'CreatedOn' and 'UpdatedOn', extract only the date part
+                        if (in_array($field, ['CreatedOn', 'UpdatedOn']) && !empty($row[$columnMapping[$field]])) {
+                            $rowAsKeyValue[$field] = date('Y-m-d', strtotime($row[$columnMapping[$field]]));
+                        } else {
+                            $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
+                        }
                     } else {
                         // Handle missing columns by setting default values or skipping
                         $rowAsKeyValue[$field] = null; // or some default value

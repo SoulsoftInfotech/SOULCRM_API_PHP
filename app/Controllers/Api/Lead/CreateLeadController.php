@@ -374,25 +374,28 @@ public function itemExcelUpload()
     }
 }
 
-public function leadOptions(){
-    $leadArray= array(
-        "Lead",
-        "Potential",
-        "Demo",
-        "CallBack",
-        "Not Interested",
-        "Visit Required",
-        "Data Entry",
-        "Installation",
-        "Customer",
-        "Booking Done"
+public function leadOptions() {
+    $leadArray = array(
+        "Lead" => "Lead",
+        "Potential" => "Potential",
+        "Demo" => "Demo",
+        "CallBack" => "CallBack",
+        "NotInterested" => "NotInterested",
+        "VisitRequired" => "VisitRequired",
+        "DataEntry" => "DataEntry",
+        "Installation" => "Installation",
+        "Customer" => "Customer",
+        "BookingDone" => "BookingDone"
     );
+    
     $response = [
-        'status' =>200,
-        'msg'=>'All lead type opentions are available',
-        'data'=>$leadArray
+        'status' => 200,
+        'msg' => 'All lead type options are available',
+        'data' => $leadArray
     ];
+    
     return $this->response->setJSON($response);
 }
+
 
 }

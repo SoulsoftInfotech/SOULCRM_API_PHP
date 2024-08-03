@@ -379,13 +379,13 @@ public function leadOptions() {
         "Lead" => "Lead",
         "Potential" => "Potential",
         "Demo" => "Demo",
-        "CallBack" => "CallBack",
-        "NotInterested" => "NotInterested",
-        "VisitRequired" => "VisitRequired",
-        "DataEntry" => "DataEntry",
+        "CallBack" => "Call Back",
+        "NotInterested" => "Not Interested",
+        "VisitRequired" => "Visit Required",
+        "DataEntry" => "Data Entry",
         "Installation" => "Installation",
         "Customer" => "Customer",
-        "BookingDone" => "BookingDone"
+        "BookingDone" => "Booking Done"
     );
     
     $response = [

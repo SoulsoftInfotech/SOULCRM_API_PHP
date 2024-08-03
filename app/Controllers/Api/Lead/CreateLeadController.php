@@ -374,5 +374,20 @@ public function itemExcelUpload()
     }
 }
 
+public function leadOptions(){
+    $leadArray= array(
+        "Lead",
+        "Potential",
+        "Demo",
+        "CallBack",
+        "Not Interested",
+        "Visit Required",
+        "Data Entry",
+        "Installation",
+        "Customer",
+        "Booking Done"
+    );
+    return $leadArray;
+}
 
 }

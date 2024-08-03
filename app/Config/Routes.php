@@ -23,6 +23,7 @@ $routes->group("api/leads", function($routes){
     $routes->post('upload','Api\Lead\CreateLeadController::itemExcelUpload');
     $routes->get('customers','Api\Lead\CreateLeadController::getAllCustomers');
     $routes->post('customer/(:num)','Api\Lead\CreateLeadController::updateWithCustomer/$1');
+    $routes->get('getleadtype','Api\Lead\CreateLeadController::leadOptions');
 }
 );
 // $routes->group("api/users", ['filter' => 'authFilter'],function($routes){

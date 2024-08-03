@@ -387,7 +387,12 @@ public function leadOptions(){
         "Customer",
         "Booking Done"
     );
-    return $leadArray;
+    $response = [
+        'status' =>200,
+        'msg'=>'All lead type opentions are available',
+        'data'=>$leadArray
+    ];
+    return $this->response->setJSON($response);
 }
 
 }

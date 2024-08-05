@@ -376,16 +376,16 @@ public function itemExcelUpload()
 
 public function leadOptions() {
     $leadArray = array(
-        "Lead" => "Lead",
-        "Potential" => "Potential",
-        "Demo" => "Demo",
-        "CallBack" => "Call Back",
-        "NotInterested" => "Not Interested",
-        "VisitRequired" => "Visit Required",
-        "DataEntry" => "Data Entry",
-        "Installation" => "Installation",
-        "Customer" => "Customer",
-        "BookingDone" => "Booking Done"
+        "Lead",
+        "Potential",
+        "Demo",
+        "Call Back",
+        "Not Interested",
+        "Visit Required",
+        "Data Entry",
+        "Installation",
+        "Customer",
+        "Booking Done"
     );
     
     $response = [
@@ -396,6 +396,7 @@ public function leadOptions() {
     
     return $this->response->setJSON($response);
 }
+
 
 
 }

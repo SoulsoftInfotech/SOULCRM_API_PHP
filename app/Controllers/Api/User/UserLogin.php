@@ -9,33 +9,8 @@ use Firebase\JWT\Key;
 
 class UserLogin extends BaseController
 {
-    public function index()
-    {
-        //
-    }
+    private $jwtSecret = 'fdsfsdf684454dgsgs464545646gs64461'; // Directly set the JWT secret key
 
-//     public function create()
-// {
-//     $authHeader = $this->request->getHeaderLine('Authorization');
-//     if (!$authHeader) {
-//         return $this->response->setJSON(['message' => 'Unauthorized: Token is missing'])->setStatusCode(401);
-//     }
-
-//     $token = explode(' ', $authHeader)[1];
-//     try {
-//         $decoded = JWT::decode($token, new Key(getenv('JWT_SECRET'), 'HS256'));
-//         // Check if the user has the right permissions to create users
-//         if ($decoded->role !== 'admin') {
-//             return $this->response->setJSON(['message' => 'Unauthorized: Insufficient permissions'])->setStatusCode(403);
-//         }
-//     } catch (\Exception $e) {
-//         return $this->response->setJSON(['message' => 'Unauthorized: Invalid token'])->setStatusCode(401);
-//     }
-
-//     // Proceed with user creation logic
-// }
-
-    
     public function create()
     {
         $userLoginModel = new UserLoginModel();
@@ -73,28 +48,26 @@ class UserLogin extends BaseController
         $userLoginModel = new UserLoginModel();
         $loginUserName = $this->request->getVar('LoginUserName');
         $password = $this->request->getVar('Password');
-
+    
         $user = $userLoginModel->where('LoginUserName', $loginUserName)->first();
-
-        if ($user && $user['Password'] === $password) {
-            // Generate JWT token
-            $key = getenv('JWT_SECRET');
+    
+         if ($user && $user['Password'] === $password) {
+            // if ($user && password_verify($password, $user['Password'])) {
             $issuedAt = time();
-            $expirationTime = $issuedAt + 3600; // jwt valid for 1 hour from the issued time
+            $expirationTime = $issuedAt + 3600; // JWT valid for 1 hour
             $payload = [
                 'iat' => $issuedAt,
                 'exp' => $expirationTime,
                 'sub' => $user['EmpId'],
                 'username' => $user['LoginUserName'],
             ];
-
-            $jwt = JWT::encode($payload, $key, 'HS256');
-
-            // Prepare response data
+    
+            $jwt = JWT::encode($payload, $this->jwtSecret, 'HS256');
+    
             $response = [
                 'msg' => 'user login successfully!',
                 'userid' => $user['EmpId'],
-                'url' => 'https://soulcrm.soulsoft.in/',
+                'url' => 'http://localhost:8080/',
                 'type' => 'master',
                 'status' => 200,
                 'tokenDetails' => [
@@ -108,37 +81,22 @@ class UserLogin extends BaseController
                     'userid' => $user['EmpId'],
                 ]
             ];
-
+    
             return $this->response->setJSON($response);
         }
-
+    
         return $this->response->setJSON([
             'msg' => 'Invalid username or password',
             'status' => 401
         ]);
     }
-
+    
     private function generateRefreshToken($userId)
     {
-        $key = getenv('JWT_SECRET');
         $payload = [
             'exp' => time() + (3600 * 24 * 7), // Valid for 7 days
             'userid' => $userId,
         ];
-        return JWT::encode($payload, $key, 'HS256');
+        return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

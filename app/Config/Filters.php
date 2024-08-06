@@ -25,7 +25,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-         'authFilter' => \App\Filters\JWTAuthFilter::class,
+        'authFilter'    => \App\Filters\JWTAuthFilter::class, // Correctly define the alias
     ];
 
     /**
@@ -36,16 +36,18 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            'authFilter' => [
+                'except' => [
+                    'api/users/login', // Make sure this matches the actual route
+                    'api/users/create' // Example of another route that might need exclusion
+                ],
+            ],
         ],
         'after' => [
             'toolbar',
-            // 'honeypot',
-            // 'secureheaders',
         ],
     ];
+     
 
     /**
      * List of filter aliases that works on a
@@ -72,6 +74,6 @@ class Filters extends BaseConfig
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [
-         'authFilter' => ['before' => ['api/*']],
+        'authFilter' => ['before' => ['api/*']],
     ];
 }

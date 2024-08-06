@@ -13,17 +13,18 @@ class CorsFilter implements FilterInterface
     {
         $cors = new Cors();
         $response = service('response');
-
+    
         $response->setHeader('Access-Control-Allow-Origin', implode(', ', $cors->allowedOrigins));
         $response->setHeader('Access-Control-Allow-Methods', implode(', ', $cors->allowedMethods));
         $response->setHeader('Access-Control-Allow-Headers', implode(', ', $cors->allowedHeaders));
-
+    
         if ($request->getMethod() === 'OPTIONS') {
             $response->setStatusCode(200);
             $response->send();
             exit;
         }
     }
+    
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {

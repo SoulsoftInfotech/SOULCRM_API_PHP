@@ -15,7 +15,7 @@ class CreateLeadModel extends Model
     protected $allowedFields    = ['LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
     'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
     'Narration', 'LeadStatus', 'HandlerEmp','Address','CreatedBy', 'CreatedOn', 
-    'UpdatedBy', 'UpdatedOn'];
+    'UpdatedBy', 'UpdatedOn','NextFollowUpDate'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -49,7 +49,23 @@ class CreateLeadModel extends Model
         $this->db = \Config\Database::connect();
         // OR $this->db = db_connect();
     }
-    public function getAllLeadsModel(){
-        return $this->where('LeadStatus','Lead')->findAll();
+    // public function getAllLeadsModel(){
+    //     return $this->where('LeadStatus','Lead')->findAll();
+    // }
+    public function getAllLeadsModel()
+    {
+        $leads = $this->where('LeadStatus', 'Lead')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($leads as &$lead) {
+            if (isset($lead['CreatedOn'])) {
+                $lead['CreatedOn'] = date('d-m-Y', strtotime($lead['CreatedOn']));
+            }
+            if (isset($lead['UpdatedOn'])) {
+                $lead['UpdatedOn'] = date('d-m-Y', strtotime($lead['UpdatedOn']));
+            }
+        }
+
+        return $leads;
     }
 }

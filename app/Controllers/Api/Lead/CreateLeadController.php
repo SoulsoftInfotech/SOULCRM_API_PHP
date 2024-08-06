@@ -39,6 +39,7 @@ class CreateLeadController extends BaseController
             'CreatedOn' => date('Y-m-d'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
             'UpdatedOn' => date('Y-m-d'),
+            'NextFollowUpDate' =>$this->request->getVar('NextFollowUpDate'),
         ];
 
         if ($leadModel->save($leadData)) {
@@ -76,7 +77,8 @@ class CreateLeadController extends BaseController
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
             'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d H:i:s'),
+            'UpdatedOn' => date('Y-m-d'),
+            'NextFollowUpDate' =>$this->request->getVar('NextFollowUpDate'),
         ];
 
         if ($leadModel->update($id, $leadData)) {
@@ -179,7 +181,8 @@ public function getLeadById($id)
             'HandlerEmp' => $this->request->getVar('HandlerEmp'),
             'Address'=>$this->request->getVar('Address'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d H:i:s'),
+            'UpdatedOn' => date('Y-m-d'),
+            'NextFollowUpDate' =>$this->request->getVar('NextFollowUpDate'),
         ];
     
         if ($leadModel->update($id, $leadData)) {
@@ -187,7 +190,7 @@ public function getLeadById($id)
             if ($leadData['LeadType'] == 'Booking Done') {
                 // Prepare customer data
                 $customerData = [
-                    'BookingDate' => date('Y-m-d H:i:s'),
+                    'BookingDate' => date('Y-m-d'),
                     'LeadId' => $leadData['LeadId'],
                     'BookedByEmplId' => $leadData['HandlerEmp'],
                     'BookedForProductId' => $leadData['ProductId'],
@@ -299,7 +302,7 @@ public function itemExcelUpload()
                 'LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
                 'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
                 'Narration', 'LeadStatus', 'HandlerEmp', 'Address', 'CreatedBy', 
-                'CreatedOn', 'UpdatedBy', 'UpdatedOn'
+                'CreatedOn', 'UpdatedBy', 'UpdatedOn','NextFollowUpDate'
             ];
 
             // Extract column names and data
@@ -314,13 +317,19 @@ public function itemExcelUpload()
                 }
             }
 
+            // Process each row of data
             for ($i = 1; $i < count($excelData); $i++) {
                 $row = $excelData[$i];
                 $rowAsKeyValue = [];
 
                 foreach ($targetFields as $field) {
                     if (isset($columnMapping[$field])) {
-                        $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
+                        // For 'CreatedOn' and 'UpdatedOn', extract only the date part
+                        if (in_array($field, ['CreatedOn', 'UpdatedOn']) && !empty($row[$columnMapping[$field]])) {
+                            $rowAsKeyValue[$field] = date('Y-m-d', strtotime($row[$columnMapping[$field]]));
+                        } else {
+                            $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
+                        }
                     } else {
                         // Handle missing columns by setting default values or skipping
                         $rowAsKeyValue[$field] = null; // or some default value
@@ -364,6 +373,30 @@ public function itemExcelUpload()
         return $this->response->setJSON($response);
     }
 }
+
+public function leadOptions() {
+    $leadArray = array(
+        "Lead",
+        "Potential",
+        "Demo",
+        "Call Back",
+        "Not Interested",
+        "Visit Required",
+        "Data Entry",
+        "Installation",
+        "Customer",
+        "Booking Done"
+    );
+    
+    $response = [
+        'status' => 200,
+        'msg' => 'All lead type options are available',
+        'data' => $leadArray
+    ];
+    
+    return $this->response->setJSON($response);
+}
+
 
 
 }

@@ -10,6 +10,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\JWTAuthFilter; // Import the JWTAuthFilter class
 
+
 class Filters extends BaseConfig
 {
     /**

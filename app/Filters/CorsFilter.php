@@ -1,13 +1,12 @@
 <?php
-
-// In app/Filters/CORSFilter.php
+// app/Filters/CORSFilter.php
 namespace App\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 
-class CORSFilter implements FilterInterface
+class CorsFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
@@ -15,6 +14,15 @@ class CORSFilter implements FilterInterface
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
         header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+        
+        // Handle preflight OPTIONS request
+        if ($request->getMethod(true) === 'OPTIONS') {
+            // Return a 200 OK response for OPTIONS request
+            $response = service('response');
+            $response->setStatusCode(200);
+            return $response;
+        }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
@@ -22,3 +30,4 @@ class CORSFilter implements FilterInterface
         // No additional headers needed after response
     }
 }
+

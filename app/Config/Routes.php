@@ -7,13 +7,22 @@ use CodeIgniter\Router\RouteCollection;
  */
 // $routes->get('/', 'Home::index');
 
-$routes->group("api/users", function($routes){
+// $routes->group("api/users",['filter' => 'authFilter'], function($routes){
+
+//     $routes->post('createuser','Api\User\UserLogin::create');
+//     $routes->post('login','Api\User\UserLogin::login');
+// }
+// );
+
+
+
+$routes->group("api/users",function($routes){
 
     $routes->post('createuser','Api\User\UserLogin::create');
     $routes->post('login','Api\User\UserLogin::login');
 }
 );
-$routes->group("api/leads", function($routes){
+$routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
      
     $routes->post('createlead','Api\Lead\CreateLeadController::create');
     $routes->get('leadsandcust','Api\Lead\CreateLeadController::getAllLeadswithCustomer');
@@ -26,10 +35,5 @@ $routes->group("api/leads", function($routes){
     $routes->get('getleadtype','Api\Lead\CreateLeadController::leadOptions');
 }
 );
-// $routes->group("api/users", ['filter' => 'authFilter'],function($routes){
 
-//     $routes->post('createuser','Api\User\UserLogin::create');
-//     $routes->post('login','Api\User\UserLogin::login');
-// }
-// );
-// $routes->group("api/leads",['filter' => 'authFilter'], function($routes){
+

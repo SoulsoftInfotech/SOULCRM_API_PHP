@@ -1,40 +1,24 @@
 <?php
 
+// In app/Filters/CORSFilter.php
 namespace App\Filters;
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
-use Config\Cors;
 
-class CorsFilter implements FilterInterface
+class CORSFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        $cors = new Cors();
-        $response = service('response');
-
-        // Print debug info to log
-        log_message('info', 'CORS filter applied with origin: ' . implode(', ', $cors->allowedOrigins));
-
-        $response->setHeader('Access-Control-Allow-Origin', implode(', ', $cors->allowedOrigins));
-        $response->setHeader('Access-Control-Allow-Methods', implode(', ', $cors->allowedMethods));
-        $response->setHeader('Access-Control-Allow-Headers', implode(', ', $cors->allowedHeaders));
-
-        // Handle preflight requests
-        if ($request->getMethod() === 'OPTIONS') {
-            $response->setStatusCode(200);
-            $response->send();
-            exit;
-        }
+        // Allow all origins for simplicity; adjust as needed for security
+        header("Access-Control-Allow-Origin: *");
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+        header("Access-Control-Allow-Headers: Content-Type, Authorization");
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Add headers to all responses (optional)
-        $cors = new Cors();
-        $response->setHeader('Access-Control-Allow-Origin', implode(', ', $cors->allowedOrigins));
-        $response->setHeader('Access-Control-Allow-Methods', implode(', ', $cors->allowedMethods));
-        $response->setHeader('Access-Control-Allow-Headers', implode(', ', $cors->allowedHeaders));
+        // No additional headers needed after response
     }
 }

@@ -13,21 +13,28 @@ class CorsFilter implements FilterInterface
     {
         $cors = new Cors();
         $response = service('response');
-    
+
+        // Print debug info to log
+        log_message('info', 'CORS filter applied with origin: ' . implode(', ', $cors->allowedOrigins));
+
         $response->setHeader('Access-Control-Allow-Origin', implode(', ', $cors->allowedOrigins));
         $response->setHeader('Access-Control-Allow-Methods', implode(', ', $cors->allowedMethods));
         $response->setHeader('Access-Control-Allow-Headers', implode(', ', $cors->allowedHeaders));
-    
+
+        // Handle preflight requests
         if ($request->getMethod() === 'OPTIONS') {
             $response->setStatusCode(200);
             $response->send();
             exit;
         }
     }
-    
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Do something after the request
+        // Add headers to all responses (optional)
+        $cors = new Cors();
+        $response->setHeader('Access-Control-Allow-Origin', implode(', ', $cors->allowedOrigins));
+        $response->setHeader('Access-Control-Allow-Methods', implode(', ', $cors->allowedMethods));
+        $response->setHeader('Access-Control-Allow-Headers', implode(', ', $cors->allowedHeaders));
     }
 }

@@ -12,17 +12,16 @@ class CorsFilter implements FilterInterface
         // Allow all origins for simplicity; adjust as needed for security
         header("Access-Control-Allow-Origin: *");
         header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-        header("Access-Control-Allow-Headers: Content-Type, Authorization");
+        header("Access-Control-Allow-Headers: Content-Type, Authorization,X-Requested-With");
 
         // Handle preflight OPTIONS request
         if ($request->getMethod(true) === 'OPTIONS') {
-            // Return a 200 OK response for OPTIONS request
             $response = service('response');
-            return $response->setStatusCode(200)
-                            ->setHeader('Access-Control-Allow-Origin', '*')
-                            ->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-                            ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-                            ->setBody('OK');
+            $response->setStatusCode(200);
+            $response->setHeader('Access-Control-Allow-Origin', '*');
+            $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+            return $response;
         }
     }
 

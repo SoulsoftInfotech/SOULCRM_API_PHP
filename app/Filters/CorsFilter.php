@@ -18,11 +18,11 @@ class CorsFilter implements FilterInterface
         if ($request->getMethod(true) === 'OPTIONS') {
             // Return a 200 OK response for OPTIONS request
             $response = service('response');
-            $response->setStatusCode(200);
-            $response->setHeader('Access-Control-Allow-Origin', '*');
-            $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-            $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-            return $response;
+            return $response->setStatusCode(200)
+                            ->setHeader('Access-Control-Allow-Origin', '*')
+                            ->setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+                            ->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+                            ->setBody('OK');
         }
     }
 

@@ -39,7 +39,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            'cors' => ['except' => ['*']],
+            'cors' => ['except' => ['api/*']],
             'authFilter' => [
                 'except' => [
                     'api/users/login', // Make sure this matches the actual route

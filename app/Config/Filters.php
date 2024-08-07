@@ -8,7 +8,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
-// use App\Filters\CorsFilter;
+use App\Filters\CorsFilter;
 use App\Filters\JWTAuthFilter; // Import the JWTAuthFilter class
 
 
@@ -27,7 +27,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        // 'cors'          => \App\Filters\CorsFilter::class,
+        'cors'          => \App\Filters\CorsFilter::class,
         'authFilter'    => \App\Filters\JWTAuthFilter::class, // Correctly define the alias
     ];
 

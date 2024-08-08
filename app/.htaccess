@@ -1,4 +1,4 @@
-
+<?php
  <!-- Disable directory browsing -->
 Options -Indexes
 

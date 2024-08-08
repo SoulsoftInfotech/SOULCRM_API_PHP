@@ -50,7 +50,7 @@ class Filters extends BaseConfig
         'after' => [
             // 'cors' => ['except' => ['*']],
             'toolbar',
-            'CorsFilter',
+            // 'CorsFilter',
         ],
     ];
      

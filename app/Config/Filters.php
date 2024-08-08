@@ -82,6 +82,7 @@ class Filters extends BaseConfig
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [
-        'authFilter' => ['before' => ['api/*']],
+        'authFilter' => \App\Filters\JWTAuthFilter::class, // Correctly define the alias
+        // 'authFilter' => ['before' => ['api/*']],
     ];
 }

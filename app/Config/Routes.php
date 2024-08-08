@@ -22,8 +22,10 @@ $routes->group("api/users",function($routes){
     $routes->post('login','Api\User\UserLogin::login');
 }
 );
-$routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
-     
+// $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
+    $routes->group("api/leads",function($routes){     
+
+
     $routes->post('save','Api\Lead\CreateLeadController::create');
     $routes->get('leadsandcust','Api\Lead\CreateLeadController::getAllLeadswithCustomer');
     $routes->get('leads','Api\Lead\CreateLeadController::getAllLeads');

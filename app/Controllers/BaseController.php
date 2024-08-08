@@ -21,14 +21,11 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
-    
     /**
      * Instance of the main Request object.
      *
      * @var CLIRequest|IncomingRequest
      */
-    
-
     protected $request;
 
     /**
@@ -49,36 +46,17 @@ abstract class BaseController extends Controller
     /**
      * @return void
      */
-    // public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-    // {
-    //     // Do Not Edit This Line
-    //     parent::initController($request, $response, $logger);
-
-    //     // Preload any models, libraries, etc, here.
-    //     header('Access-Control-Allow-Origin: http://localhost:3000');
-    //     header("Access-Control-Allow-Methods: POST,GET, OPTIONS, DELETE, PUT, PATCH");
-    //     header("Access-Control-Allow-Headers: *");
-
-
-    //     // E.g.: $this->session = \Config\Services::session();
-    // }
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-{
-    // Do Not Edit This Line
-    parent::initController($request, $response, $logger);
+    {
+        // Do Not Edit This Line
+        parent::initController($request, $response, $logger);
 
-    // Add CORS headers
-    header('Access-Control-Allow-Origin: http://localhost:3000'); // Replace with '*' for all origins
-    header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-    header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-    header('Access-Control-Allow-Credentials: true');
+        // Preload any models, libraries, etc, here.
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: POST,GET, OPTIONS, DELETE, PUT, PATCH");
+        header("Access-Control-Allow-Headers: *");
 
-    // Handle preflight request
-    if ($request->getMethod() === 'options') {
-        $response->setStatusCode(200);
-        $response->send();
-        exit;
+
+        // E.g.: $this->session = \Config\Services::session();
     }
-}
-
 }

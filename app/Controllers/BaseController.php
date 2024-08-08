@@ -19,9 +19,10 @@ abstract class BaseController extends Controller
     {
         parent::initController($request, $response, $logger);
 
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE, PUT, PATCH");
-        header("Access-Control-Allow-Headers: *");
+        $response->setHeader('Access-Control-Allow-Origin', '*');
+        $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        $response->setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        
     }
 }
 

@@ -27,7 +27,8 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
-        'cors'          => \App\Filters\CorsFilter::class,
+        // 'cors'          => \App\Filters\CorsFilter::class,
+        'cors' => CorsFilter::class,
         'authFilter'    => \App\Filters\JWTAuthFilter::class, // Correctly define the alias
     ];
 
@@ -39,7 +40,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            // 'cors' => ['except' => ['api/*']],
+            'cors',
             'authFilter' => [
                 'except' => [
                     'api/users/login', // Make sure this matches the actual route
@@ -48,7 +49,7 @@ class Filters extends BaseConfig
             ],
         ],
         'after' => [
-            // 'cors' => ['except' => ['*']],
+            // 'cors' => ['except' => []],
             'toolbar',
             // 'CorsFilter',
         ],

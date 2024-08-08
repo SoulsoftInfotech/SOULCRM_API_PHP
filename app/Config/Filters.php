@@ -40,7 +40,7 @@ class Filters extends BaseConfig
      */
     public array $globals = [
         'before' => [
-            'cors' => ['except' => ['api/*']],
+            'cors' => ['except' => ['api/users/login', 'api/users/create']], // Apply CORS filter to all API routes except these
             'authFilter' => [
                 'except' => [
                     'api/users/login', // Make sure this matches the actual route
@@ -50,7 +50,7 @@ class Filters extends BaseConfig
         ],
         'after' => [
             // 'cors' => ['except' => []],
-            'cors',
+            // 'cors',
             'toolbar',
           
         ],

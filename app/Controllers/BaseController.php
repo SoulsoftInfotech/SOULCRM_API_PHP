@@ -21,11 +21,14 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
+    
     /**
      * Instance of the main Request object.
      *
      * @var CLIRequest|IncomingRequest
      */
+    
+
     protected $request;
 
     /**
@@ -52,7 +55,7 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
-        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Origin: http://localhost:3000');
         header("Access-Control-Allow-Methods: POST,GET, OPTIONS, DELETE, PUT, PATCH");
         header("Access-Control-Allow-Headers: *");
 

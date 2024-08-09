@@ -82,14 +82,15 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+        return $bookingData;
     }
 
     public function findInstallationData()
     {
-        $bookingData = $this->where('LeadStatus','Installation')->findAll();
+        $installationData = $this->where('LeadStatus','Installation')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($installationData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -97,14 +98,15 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+        return $installationData;
     }
 
     public function findPotentialData()
     {
-        $bookingData = $this->where('LeadStatus','Potential')->findAll();
+        $PotentialData = $this->where('LeadStatus','Potential')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($PotentialData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -112,14 +114,15 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+        return $PotentialData;
     }
 
     public function findDemoData()
     {
-        $bookingData = $this->where('LeadStatus','Demo')->findAll();
+        $DemoData = $this->where('LeadStatus','Demo')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($DemoData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -127,14 +130,17 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+
+        return $DemoData;
+
     }
 
     public function findCallBackData()
     {
-        $bookingData = $this->where('LeadStatus','Call Back')->findAll();
+        $CallBackData = $this->where('LeadStatus','Call Back')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($CallBackData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -142,14 +148,16 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+
+        return $CallBackData;
     }
 
     public function findNotInterestedData()
     {
-        $bookingData = $this->where('LeadStatus','Not Interested')->findAll();
+        $NotInterestedData = $this->where('LeadStatus','Not Interested')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($NotInterestedData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -157,14 +165,16 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+
+        return $NotInterestedData;
     }
 
     public function findVisitRequiredData()
     {
-        $bookingData = $this->where('LeadStatus','Visit Required')->findAll();
+        $VisitRequiredData = $this->where('LeadStatus','Visit Required')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($VisitRequiredData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -172,14 +182,16 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+
+        return $VisitRequiredData;
     }
 
     public function findDataEntryData()
     {
-        $bookingData = $this->where('LeadStatus','Data Entry')->findAll();
+        $DataEntryData = $this->where('LeadStatus','Data Entry')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($DataEntryData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -187,14 +199,16 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+
+        return $DataEntryData;
     }
 
     public function findCustomerData()
     {
-        $bookingData = $this->where('LeadStatus','Customer')->findAll();
+        $CustomerData = $this->where('LeadStatus','Customer')->findAll();
 
         // Format dates to only show the date part
-        foreach ($bookingData as &$booking) {
+        foreach ($CustomerData as &$booking) {
             if (isset($booking['CreatedOn'])) {
                 $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
             }
@@ -202,5 +216,7 @@ class CreateLeadModel extends Model
                 $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
             }
         }
+
+        return $CustomerData;
     }
 }

@@ -416,4 +416,22 @@ public function getAllBookingDone(){
     }
 }
 
+public function getAllInstallation(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findInstallationData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Installation data retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Installation data found'
+        ]);
+    }
+}
 }

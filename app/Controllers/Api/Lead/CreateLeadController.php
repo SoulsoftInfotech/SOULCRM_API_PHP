@@ -397,6 +397,23 @@ public function leadOptions() {
     return $this->response->setJSON($response);
 }
 
+public function getAllBookingDone(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findBookingData();
 
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Booking data retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No booking data found'
+        ]);
+    }
+}
 
 }

@@ -68,4 +68,19 @@ class CreateLeadModel extends Model
 
         return $leads;
     }
+
+    public function findBookingData()
+    {
+        $bookingData = $this->where('LeadStatus','Booking Done')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
 }

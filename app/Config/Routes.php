@@ -34,6 +34,7 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
     $routes->post('customer/(:num)','Api\Lead\CreateLeadController::updateWithCustomer/$1');
     $routes->get('getleadtype','Api\Lead\CreateLeadController::leadOptions');
     $routes->get('Bookings','Api\Lead\CreateLeadController::getAllBookingDone');
+    $routes->get('Installation','Api\Lead\CreateLeadController::getAllInstallation');
 }
 );
 

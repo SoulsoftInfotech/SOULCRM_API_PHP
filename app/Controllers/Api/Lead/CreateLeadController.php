@@ -20,7 +20,7 @@ class CreateLeadController extends BaseController
         $leadModel = new CreateLeadModel();
 
         $leadData = [
-            'LeadId' => $this->request->getVar('LeadId'),
+            // 'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
             'LeadDate' => $this->request->getVar('LeadDate'),
             'ContactNo' => $this->request->getVar('ContactNo'),
@@ -61,7 +61,7 @@ class CreateLeadController extends BaseController
         $leadModel = new CreateLeadModel();
 
         $leadData = [
-            'LeadId' => $this->request->getVar('LeadId'),
+            // 'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
             'LeadDate' => $this->request->getVar('LeadDate'),
             'ContactNo' => $this->request->getVar('ContactNo'),
@@ -165,7 +165,7 @@ public function getLeadById($id)
     
         // Prepare lead data
         $leadData = [
-            'LeadId' => $this->request->getVar('LeadId'),
+            // 'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
             'LeadDate' => $this->request->getVar('LeadDate'),
             'ContactNo' => $this->request->getVar('ContactNo'),

@@ -39,7 +39,7 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
     $routes->get('DataEntrys','Api\Lead\CreateLeadController::getAllDataEntry');
     $routes->get('VisitRequired','Api\Lead\CreateLeadController::getAllVisitRequired');
     $routes->get('Installations','Api\Lead\CreateLeadController::getAllInstallation');
-    $routes->get('Potentials','Api\Lead\CreateLeadController::getAllPotential');
+    $routes->get('potentials','Api\Lead\CreateLeadController::getAllPotential');
     $routes->get('Demo','Api\Lead\CreateLeadController::getAllDemo');
     $routes->get('CallBack','Api\Lead\CreateLeadController::getAllCallBack');
     $routes->get('NotInterested','Api\Lead\CreateLeadController::getAllNotInterested');

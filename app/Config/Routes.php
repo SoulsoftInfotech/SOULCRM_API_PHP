@@ -33,8 +33,16 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
     $routes->get('customers','Api\Lead\CreateLeadController::getAllCustomers');
     $routes->post('customer/(:num)','Api\Lead\CreateLeadController::updateWithCustomer/$1');
     $routes->get('getleadtype','Api\Lead\CreateLeadController::leadOptions');
+
     $routes->get('Bookings','Api\Lead\CreateLeadController::getAllBookingDone');
-    $routes->get('Installation','Api\Lead\CreateLeadController::getAllInstallation');
+    $routes->get('Customers','Api\Lead\CreateLeadController::getAllCustomer');
+    $routes->get('DataEntrys','Api\Lead\CreateLeadController::getAllDataEntry');
+    $routes->get('VisitRequired','Api\Lead\CreateLeadController::getAllVisitRequired');
+    $routes->get('Installations','Api\Lead\CreateLeadController::getAllInstallation');
+    $routes->get('Potentials','Api\Lead\CreateLeadController::getAllPotential');
+    $routes->get('Demo','Api\Lead\CreateLeadController::getAllDemo');
+    $routes->get('CallBack','Api\Lead\CreateLeadController::getAllCallBack');
+    $routes->get('NotInterested','Api\Lead\CreateLeadController::getAllNotInterested');
 }
 );
 

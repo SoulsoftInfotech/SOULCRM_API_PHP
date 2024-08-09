@@ -98,4 +98,109 @@ class CreateLeadModel extends Model
             }
         }
     }
+
+    public function findPotentialData()
+    {
+        $bookingData = $this->where('LeadStatus','Potential')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
+
+    public function findDemoData()
+    {
+        $bookingData = $this->where('LeadStatus','Demo')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
+
+    public function findCallBackData()
+    {
+        $bookingData = $this->where('LeadStatus','Call Back')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
+
+    public function findNotInterestedData()
+    {
+        $bookingData = $this->where('LeadStatus','Not Interested')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
+
+    public function findVisitRequiredData()
+    {
+        $bookingData = $this->where('LeadStatus','Visit Required')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
+
+    public function findDataEntryData()
+    {
+        $bookingData = $this->where('LeadStatus','Data Entry')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
+
+    public function findCustomerData()
+    {
+        $bookingData = $this->where('LeadStatus','Customer')->findAll();
+
+        // Format dates to only show the date part
+        foreach ($bookingData as &$booking) {
+            if (isset($booking['CreatedOn'])) {
+                $booking['CreatedOn'] = date('d-m-Y', strtotime($booking['CreatedOn']));
+            }
+            if (isset($booking['UpdatedOn'])) {
+                $booking['UpdatedOn'] = date('d-m-Y', strtotime($booking['UpdatedOn']));
+            }
+        }
+    }
 }

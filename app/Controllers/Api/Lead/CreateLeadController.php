@@ -376,16 +376,16 @@ public function itemExcelUpload()
 
 public function leadOptions() {
     $leadArray = array(
-        "Lead",
-        "Potential",
-        "Demo",
-        "Call Back",
-        "Not Interested",
-        "Visit Required",
-        "Data Entry",
-        "Installation",
-        "Customer",
-        "Booking Done"
+        "Lead",//4
+        "Potential",//3
+        "Demo",//5
+        "Call Back",//6
+        "Not Interested",//7
+        "Visit Required",//8
+        "Data Entry",//9
+        "Installation",//2
+        "Customer",//10
+        "Booking Done"//1
     );
     
     $response = [
@@ -395,6 +395,64 @@ public function leadOptions() {
     ];
     
     return $this->response->setJSON($response);
+}
+
+
+public function getAllCustomer(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findCustomerData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Customer retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Customer data found'
+        ]);
+    }
+}
+
+public function getAllDataEntry(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findDataEntryData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Data Entry retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Data Entry data found'
+        ]);
+    }
+}
+
+public function getAllVisitRequired(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findVisitRequiredData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Visit Required retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Visit Required data found'
+        ]);
+    }
 }
 
 public function getAllBookingDone(){
@@ -434,4 +492,82 @@ public function getAllInstallation(){
         ]);
     }
 }
+
+public function getAllPotential(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findPotentialData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Potential data retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Potential data found'
+        ]);
+    }
+}
+
+public function getAllDemo(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findDemoData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Demo data retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Demo data found'
+        ]);
+    }
+}
+
+public function getAllCallBack(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findCallBackData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Call Back data retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Call Back data found'
+        ]);
+    }
+}
+
+
+public function getAllNotInterested(){
+    $CreateLeadModel = new CreateLeadModel();
+    $bookingdone=$CreateLeadModel->findNotInterestedData();
+
+    if($bookingdone){
+        return $this->response->setJSON([
+            'status' => 200,
+            'message' => 'Not Interested data retrieved successfully',
+            'data' => $bookingdone
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' => 404,
+            'message' => 'No Not Interested data found'
+        ]);
+    }
+}
+
 }

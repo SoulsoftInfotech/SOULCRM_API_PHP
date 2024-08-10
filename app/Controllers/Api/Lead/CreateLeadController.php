@@ -278,101 +278,102 @@ public function getLeadById($id)
 
 public function itemExcelUpload()
 {
+    // Get the uploaded file
+    $file = $this->request->getFile('excel_file');
+
     // Check if file is uploaded
-    if ($this->request->getFile('excel_file')->isValid()) {
-        $file = $this->request->getFile('excel_file');
-        $extension = $file->getExtension();
-        if ($extension == 'xlsx' || $extension == 'csv') {
+    if (!$file || !$file->isValid()) {
+        return $this->response->setJSON([
+            'status' => 400,
+            'msg' => 'No file uploaded or file upload failed.',
+        ]);
+    }
 
-            if ($extension == 'xlsx') {
-                $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file->getTempName());
-                $worksheet = $spreadsheet->getActiveSheet();
-                $excelData = $worksheet->toArray();
-            } else {
-                $file = fopen($file->getTempName(), 'r');
-                $excelData = [];
-                while (($row = fgetcsv($file)) !== false) {
-                    $excelData[] = $row;
-                }
-                fclose($file);
-            }
+    $extension = $file->getExtension();
+    if ($extension == 'xlsx' || $extension == 'csv') {
 
-            // Define the target fields
-            $targetFields = [
-                'LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
-                'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
-                'Narration', 'LeadStatus', 'HandlerEmp', 'Address', 'CreatedBy', 
-                'CreatedOn', 'UpdatedBy', 'UpdatedOn','NextFollowUpDate'
-            ];
-
-            // Extract column names and data
-            $columnNames = array_filter($excelData[0], 'is_string'); // Ensure column names are strings
-            $rowData = [];
-
-            // Create a mapping of column names to target fields
-            $columnMapping = [];
-            foreach ($columnNames as $index => $name) {
-                if (in_array($name, $targetFields)) {
-                    $columnMapping[$name] = $index;
-                }
-            }
-
-            // Process each row of data
-            for ($i = 1; $i < count($excelData); $i++) {
-                $row = $excelData[$i];
-                $rowAsKeyValue = [];
-
-                foreach ($targetFields as $field) {
-                    if (isset($columnMapping[$field])) {
-                        // For 'CreatedOn' and 'UpdatedOn', extract only the date part
-                        if (in_array($field, ['CreatedOn', 'UpdatedOn']) && !empty($row[$columnMapping[$field]])) {
-                            $rowAsKeyValue[$field] = date('Y-m-d', strtotime($row[$columnMapping[$field]]));
-                        } else {
-                            $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
-                        }
-                    } else {
-                        // Handle missing columns by setting default values or skipping
-                        $rowAsKeyValue[$field] = null; // or some default value
-                    }
-                }
-
-                $rowData[] = $rowAsKeyValue;
-            }
-
-            $CreateLeadModel = new CreateLeadModel();
-            if ($CreateLeadModel->insertBatch($rowData)) {
-                // Respond with success message and the data
-                $response = [
-                    'status' => 200,
-                    'msg' => 'Excel file data saved successfully!',
-                    'data' => $rowData,
-                ];
-                return $this->response->setJSON($response);
-            } else {
-                // Respond with error message if saving failed
-                $response = [
-                    'status' => 500,
-                    'msg' => 'Failed to save Excel file data.',
-                ];
-                return $this->response->setJSON($response);
-            }
+        if ($extension == 'xlsx') {
+            $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($file->getTempName());
+            $worksheet = $spreadsheet->getActiveSheet();
+            $excelData = $worksheet->toArray();
         } else {
-            // Respond with error if file is not Excel or CSV
+            $file = fopen($file->getTempName(), 'r');
+            $excelData = [];
+            while (($row = fgetcsv($file)) !== false) {
+                $excelData[] = $row;
+            }
+            fclose($file);
+        }
+
+        // Define the target fields
+        $targetFields = [
+            'LeadId', 'LeadNo', 'LeadDate', 'ContactNo', 'LeadName', 'CompanyName', 
+            'Location', 'ProductId', 'LeadType', 'LeadPlatForm', 'Reference', 
+            'Narration', 'LeadStatus', 'HandlerEmp', 'Address', 'CreatedBy', 
+            'CreatedOn', 'UpdatedBy', 'UpdatedOn', 'NextFollowUpDate'
+        ];
+
+        // Extract column names and data
+        $columnNames = array_filter($excelData[0], 'is_string'); // Ensure column names are strings
+        $rowData = [];
+
+        // Create a mapping of column names to target fields
+        $columnMapping = [];
+        foreach ($columnNames as $index => $name) {
+            if (in_array($name, $targetFields)) {
+                $columnMapping[$name] = $index;
+            }
+        }
+
+        // Process each row of data
+        for ($i = 1; $i < count($excelData); $i++) {
+            $row = $excelData[$i];
+            $rowAsKeyValue = [];
+
+            foreach ($targetFields as $field) {
+                if (isset($columnMapping[$field])) {
+                    // For 'CreatedOn' and 'UpdatedOn', extract only the date part
+                    if (in_array($field, ['CreatedOn', 'UpdatedOn']) && !empty($row[$columnMapping[$field]])) {
+                        $rowAsKeyValue[$field] = date('Y-m-d', strtotime($row[$columnMapping[$field]]));
+                    } else {
+                        $rowAsKeyValue[$field] = $row[$columnMapping[$field]];
+                    }
+                } else {
+                    // Handle missing columns by setting default values or skipping
+                    $rowAsKeyValue[$field] = null; // or some default value
+                }
+            }
+
+            $rowData[] = $rowAsKeyValue;
+        }
+
+        $CreateLeadModel = new CreateLeadModel();
+        if ($CreateLeadModel->insertBatch($rowData)) {
+            // Respond with success message and the data
             $response = [
-                'status' => 400,
-                'msg' => 'Uploaded file must be in Excel format (xlsx) or CSV.',
+                'status' => 200,
+                'msg' => 'Excel file data saved successfully!',
+                'data' => $rowData,
+            ];
+            return $this->response->setJSON($response);
+        } else {
+            // Respond with error message if saving failed
+            $response = [
+                'status' => 500,
+                'msg' => 'Failed to save Excel file data.',
             ];
             return $this->response->setJSON($response);
         }
     } else {
-        // Respond with error if no file is uploaded or file upload failed
+        // Respond with error if file is not Excel or CSV
         $response = [
             'status' => 400,
-            'msg' => 'No file uploaded or file upload failed.',
+            'msg' => 'Uploaded file must be in Excel format (xlsx) or CSV.',
         ];
         return $this->response->setJSON($response);
     }
 }
+
 
 public function leadOptions() {
     $leadArray = array(

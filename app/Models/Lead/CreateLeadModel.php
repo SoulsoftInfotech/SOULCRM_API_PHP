@@ -219,4 +219,23 @@ class CreateLeadModel extends Model
 
         return $CustomerData;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function countLeads(){
+        return $this->where('LeadStatus','Lead')->countAllResults();
+    }
 }

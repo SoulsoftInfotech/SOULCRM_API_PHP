@@ -43,6 +43,8 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
     $routes->get('demo','Api\Lead\CreateLeadController::getAllDemo');
     $routes->get('callback','Api\Lead\CreateLeadController::getAllCallBack');
     $routes->get('notinterested','Api\Lead\CreateLeadController::getAllNotInterested');
+
+    $routes->get('countlead','Api\Lead\CreateLeadController::countLeadstype');
 }
 );
 

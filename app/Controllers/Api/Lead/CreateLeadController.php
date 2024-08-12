@@ -571,4 +571,24 @@ public function getAllNotInterested(){
     }
 }
 
+public function countLeadstype(){
+    $CreateLeadModel = new CreateLeadModel();
+    $number=$CreateLeadModel->countLeads();
+
+    if($number){
+        return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Count of Leads are as Follows',
+            'data'=>$number
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' =>404,
+            'message'=>'No data found for leads',
+            'data'=>0
+        ]);
+    }
+}
+
 }

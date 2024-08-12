@@ -377,16 +377,16 @@ public function itemExcelUpload()
 
 public function leadOptions() {
     $leadArray = array(
-        "Lead",//4
-        "Potential",//3
+        "Lead",//4          
+        "Potential",//3     
         "Demo",//5
         "Call Back",//6
         "Not Interested",//7
         "Visit Required",//8
         "Data Entry",//9
-        "Installation",//2
+        "Installation",//2     
         "Customer",//10
-        "Booking Done"//1
+        "Booking Done"//1      
     );
     
     $response = [
@@ -571,6 +571,30 @@ public function getAllNotInterested(){
     }
 }
 
+
+
+
+
+
+public function countPotentialtype(){
+    $CreateLeadModel = new CreateLeadModel();
+    $number=$CreateLeadModel->countPotential();
+
+    if($number){
+        return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Count of Potential are as Follows',
+            'data'=>$number
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' =>404,
+            'message'=>'No data found for Potential',
+            'data'=>0
+        ]);
+    }
+}
 public function countLeadstype(){
     $CreateLeadModel = new CreateLeadModel();
     $number=$CreateLeadModel->countLeads();
@@ -590,5 +614,42 @@ public function countLeadstype(){
         ]);
     }
 }
+public function countInstallationtype(){
+    $CreateLeadModel = new CreateLeadModel();
+    $number=$CreateLeadModel->countInstallation();
 
+    if($number){
+        return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Count of Installation are as Follows',
+            'data'=>$number
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' =>404,
+            'message'=>'No data found for Installation',
+            'data'=>0
+        ]);
+    }
+}
+public function countBookingDonetype(){
+    $CreateLeadModel = new CreateLeadModel();
+    $number=$CreateLeadModel->countBookingDone();
+
+    if($number){
+        return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Count of Booking Done are as Follows',
+            'data'=>$number
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status' =>404,
+            'message'=>'No data found for Booking Done',
+            'data'=>0
+        ]);
+    }
+}
 }

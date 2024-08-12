@@ -238,4 +238,14 @@ class CreateLeadModel extends Model
     public function countLeads(){
         return $this->where('LeadStatus','Lead')->countAllResults();
     }
+    public function countPotential(){
+        return $this->where('LeadStatus','Potential')->countAllResults();
+    }
+    public function countInstallation(){
+        return $this->where('LeadStatus','Installation')->countAllResults();
+    }
+    public function countBookingDone(){
+        return $this->where('LeadStatus','Booking Done')->countAllResults();
+    }
+    
 }

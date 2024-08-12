@@ -45,6 +45,9 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
     $routes->get('notinterested','Api\Lead\CreateLeadController::getAllNotInterested');
 
     $routes->get('countlead','Api\Lead\CreateLeadController::countLeadstype');
+    $routes->get('countpotential','Api\Lead\CreateLeadController::countPotentialtype');
+    $routes->get('countinstallation','Api\Lead\CreateLeadController::countInstallationtype');
+    $routes->get('countbookingdone','Api\Lead\CreateLeadController::countBookingDonetype');
 }
 );
 

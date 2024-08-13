@@ -383,9 +383,9 @@ public function leadOptions() {
         "Call Back",//6
         "Not Interested",//7
         "Visit Required",//8
-        "Data Entry",//9
+        // "Data Entry",//9
         "Installation",//2     
-        "Customer",//10
+        // "Customer",//10
         "Booking Done"//1      
     );
     

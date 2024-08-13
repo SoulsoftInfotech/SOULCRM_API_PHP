@@ -576,6 +576,10 @@ public function getAllNotInterested(){
 
 
 
+
+
+
+
 public function countPotentialtype(){
     $CreateLeadModel = new CreateLeadModel();
     $number=$CreateLeadModel->countPotential();
@@ -649,6 +653,28 @@ public function countBookingDonetype(){
             'status' =>404,
             'message'=>'No data found for Booking Done',
             'data'=>0
+        ]);
+    }
+}
+
+
+public function countAllTypes(){
+    $CreateLeadModel = new CreateLeadModel();
+    $number=$CreateLeadModel->countAllTypes();
+    if($number){
+        return $this->response->setJSON(
+            [
+                'status'=>200,
+                'message'=>'Count of all type of leads are as follows',
+                'data'=>$number
+            ]
+            );
+    }
+    else{
+        return $this->response->setJSON([
+            'status'=>404,
+            'message'=>'No Data Found For All Types',
+            'data'=>$number
         ]);
     }
 }

@@ -248,4 +248,12 @@ class CreateLeadModel extends Model
         return $this->where('LeadStatus','Booking Done')->countAllResults();
     }
     
+
+    public function countAllTypes(){
+        $leads =$this->where('LeadStatus','Lead')->countAllResults();
+        $potential =$this->where('LeadStatus','Potential')->countAllResults();
+        $installation =$this->where('LeadStatus','Installation')->countAllResults();
+        $bookingDone =$this->where('LeadStatus','Booking Done')->countAllResults();
+        return array('leads'=>$leads,'potential'=>$potential,'installation'=>$installation,'bookingDone'=>$bookingDone);
+    }
 }

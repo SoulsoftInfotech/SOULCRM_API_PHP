@@ -31,11 +31,13 @@
         }
     },
     "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
-    },
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "https-proxy": "https://soulcrm.soulsoft.in"
+},
     "scripts": {
         "test": "phpunit"
     }
+    
 }

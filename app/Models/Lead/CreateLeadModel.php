@@ -103,7 +103,9 @@ class CreateLeadModel extends Model
 
     public function findPotentialData()
     {
-        $PotentialData = $this->where('LeadStatus','Potential')->findAll();
+        $PotentialData = $this->where('LeadStatus','Potential')
+                              ->orWhere('LeadStatus','Visit Required')  
+                              ->findAll();
 
         // Format dates to only show the date part
         foreach ($PotentialData as &$booking) {

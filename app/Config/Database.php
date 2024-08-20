@@ -30,7 +30,7 @@ class Database extends Config
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'u311423116_soulcrm',
-        'password'     => 'a^AY3v9X',
+        'password'     => 'SoulSoft@2024',
         'database'     => 'u311423116_soulcrm',
         // 'username'     => 'root',
         // 'password'     => '',

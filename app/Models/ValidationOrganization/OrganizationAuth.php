@@ -46,6 +46,6 @@ class OrganizationAuth extends Model
 
 
 public function ValidateOrganizationCode($code){
-   return $this->where('OrgCode',$code)->first();
+   return $this->where('OrgCode',$code)->findAll();
 }
 }

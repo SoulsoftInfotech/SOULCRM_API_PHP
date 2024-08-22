@@ -22,6 +22,11 @@ $routes->group("api/users",function($routes){
     $routes->post('login','Api\User\UserLogin::login');
 }
 );
+$routes->group("api/orgs",function($routes){
+
+    $routes->post('orgcode','Api\User\UserLogin::checkauthcode');
+    
+});
 $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
      
     //-----------------------------create ,update,upload-----------------------//

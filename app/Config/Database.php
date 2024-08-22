@@ -26,7 +26,38 @@ class Database extends Config
      *
      * @var array<string, mixed>
      */
+
+
+     //----------------------------------Organization Database--------------------------------//
     public array $default = [
+        'DSN'          => '',
+        'hostname'     => 'localhost',
+        'username'     => 'u311423116_CRM',
+        'password'     => 'SoulSoft@2024',
+        'database'     => 'u311423116_SoulOrgCRM',
+        // 'username'     => 'u311423116_soulcrm',
+        // 'password'     => 'SoulSoft@2024',
+        // 'database'     => 'u311423116_soulcrm',
+        // 'username'     => 'root',
+        // 'password'     => '',
+        // 'database'     => 'soul_crm',
+        'DBDriver'     => 'MySQLi',
+        'DBPrefix'     => '',
+        'pConnect'     => false,
+        'DBDebug'      => true,
+        'charset'      => 'utf8',
+        'DBCollat'     => 'utf8_general_ci',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => false,
+        'failover'     => [],
+        'port'         => 3306,
+        'numberNative' => false,
+    ];
+
+      //----------------------------------SoulSoft Database--------------------------------//
+    public array $soulsoftDB = [
         'DSN'          => '',
         'hostname'     => 'localhost',
         'username'     => 'u311423116_soulcrm',
@@ -49,6 +80,34 @@ class Database extends Config
         'port'         => 3306,
         'numberNative' => false,
     ];
+
+     //----------------------------------RKenterprises Database--------------------------------//
+     public array $RKEntDB = [
+        'DSN'          => '',
+        'hostname'     => 'localhost',
+        'username'     => 'u311423116_SoulSoft_RKEnt',
+        'password'     => 'SoulSoft@2024',
+        'database'     => 'u311423116_SoulSoft_RKEnt',
+        // 'username'     => 'root',
+        // 'password'     => '',
+        // 'database'     => 'soul_crm',
+        'DBDriver'     => 'MySQLi',
+        'DBPrefix'     => '',
+        'pConnect'     => false,
+        'DBDebug'      => true,
+        'charset'      => 'utf8',
+        'DBCollat'     => 'utf8_general_ci',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => false,
+        'failover'     => [],
+        'port'         => 3306,
+        'numberNative' => false,
+    ];
+
+
+
     // 'hostname'     => 'https://soulcrm.soulsoft.in/',
 // 'database'     => 'soul_crm'
     /**

@@ -12,7 +12,7 @@ class OrganizationAuth extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [ 'OrganizationName', 'OrgCode', 'Contact', 'DBName', 'DBPassword', 'IP', 
+    protected $allowedFields    = [ 'OrganizationName', 'OrgCode', 'Contact','DBusername', 'DBName', 'DBPassword', 'IP', 
     'LiscKey', 'Status', 'GstIn', 'Amount', 'LKFromDate', 'LKToDate', 
     'CreatedOn', 'UpdatedOn', 'AMCDate'];
 

@@ -47,24 +47,20 @@ class UserLoginModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    // public function __construct()
-    // {
-    //     parent::__construct();
-    //     $this->db = \Config\Database::connect();
-    //     // OR $this->db = db_connect();
-    // }
     public function __construct()
-{
-    parent::__construct();
-    $this->db = \Config\Database::connect('soulsoftDB');
-}
+    {
+        parent::__construct();
+        // $this->db = \Config\Database::connect();
+        // OR $this->db = db_connect();
+    }
 
-    // protected function hashPassword(array $data)
-    // {
-    //     if (isset($data['data']['Password'])) {
-    //         $data['data']['Password'] = password_hash($data['data']['Password'], PASSWORD_DEFAULT);
-    //     }
-
-    //     return $data;
-    // }
+    public function connectToDatabase($orgcode){
+        if($orgcode==89){          
+            $this->db = \Config\Database::connect('soulsoftDB');
+        }
+        else{         
+            $this->db = \Config\Database::connect('RKEntDB');
+        }
+      
+    }
 }

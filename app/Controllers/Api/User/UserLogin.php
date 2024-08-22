@@ -107,9 +107,11 @@ class UserLogin extends BaseController
         $authCode = $this->request->getVar('AuthCode');
 
         $orgModel = new OrganizationAuth();
+        $UserLoginModel = new UserLoginModel();
         if($authCode){
             $ans = $orgModel->ValidateOrganizationCode($authCode);
             if($ans){
+                $UserLoginModel->connectToDatabase($authCode);
                 return $this->response->setJSON(
                     [
                         'authcode' => $authCode,

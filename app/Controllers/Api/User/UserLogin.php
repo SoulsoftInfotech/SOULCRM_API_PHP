@@ -3,6 +3,8 @@
 namespace App\Controllers\Api\User;
 
 use App\Controllers\BaseController;
+use App\Models\Lead\CreateLeadModel;
+use App\Models\Lead\CustomerModel;
 use App\Models\User\UserLoginModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -108,10 +110,15 @@ class UserLogin extends BaseController
 
         $orgModel = new OrganizationAuth();
         $UserLoginModel = new UserLoginModel();
+        $CustomerModel= new CustomerModel();
+        $CreateLeadModel = new CreateLeadModel();
         if($authCode){
             $ans = $orgModel->ValidateOrganizationCode($authCode);
             if($ans){
                 $UserLoginModel->connectToDatabase($authCode);
+                $CustomerModel->connectToDatabaseCustomer($authCode);
+                $CreateLeadModel->connectToDatabaseCreateLead($authCode);
+                
                 return $this->response->setJSON(
                     [
                         'authcode' => $authCode,

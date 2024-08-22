@@ -45,10 +45,27 @@ class CustomerModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+    // public function __construct()
+    // {
+    //     parent::__construct();
+    //     $this->db = \Config\Database::connect();
+    //     // OR $this->db = db_connect();
+    // }
+
     public function __construct()
     {
         parent::__construct();
-        $this->db = \Config\Database::connect();
+        // $this->db = \Config\Database::connect();
         // OR $this->db = db_connect();
+    }
+
+    public function connectToDatabase($orgcode){
+        if($orgcode==89){          
+            $this->db = \Config\Database::connect('soulsoftDB');
+        }
+        else{         
+            $this->db = \Config\Database::connect('RKEntDB');
+        }
+      
     }
 }

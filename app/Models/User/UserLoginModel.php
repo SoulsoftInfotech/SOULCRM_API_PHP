@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class UserLoginModel extends Model
 {
     protected $db;
-    protected $DBGroup          = 'default';
+    protected $DBGroup          = 'u311423116_soulcrm';
     protected $table            = 'employees';
     protected $primaryKey       = 'EmpId';
     // protected $primaryKey       = 'id';
@@ -18,6 +18,7 @@ class UserLoginModel extends Model
     protected $allowedFields    = ['EmpId','EmpCode','EmpName','Designation','LoginUserName','Password','Description','CreatedBy','CreatedOn','UpdatedBy','UpdatedOn'];
 
     // protected bool $allowEmptyInserts = false;
+
 
     // Dates
     protected $useTimestamps = false;

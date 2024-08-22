@@ -8,6 +8,7 @@ use App\Models\Lead\CustomerModel;
 use App\Models\User\UserLoginModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use CodeIgniter\Database\Config;
 use App\Models\ValidationOrganization\OrganizationAuth;
 
 
@@ -109,20 +110,30 @@ class UserLogin extends BaseController
         $authCode = $this->request->getVar('AuthCode');
 
         $orgModel = new OrganizationAuth();
-        $UserLoginModel = new UserLoginModel();
-        $CustomerModel= new CustomerModel();
-        $CreateLeadModel = new CreateLeadModel();
+       
         if($authCode){
-            $ans = $orgModel->ValidateOrganizationCode($authCode);
-            if($ans){
-                $UserLoginModel->connectToDatabase($authCode);
-                $CustomerModel->connectToDatabaseCustomer($authCode);
-                $CreateLeadModel->connectToDatabaseCreateLead($authCode);
+            $orgDetails = $orgModel->ValidateOrganizationCode($authCode);
+            if(!empty($orgDetails)){
                 
+                $orgDetails=$orgDetails[0];
+                $dbName = $orgDetails['DBName'];
+                $dbPassword = $orgDetails['DBPassword'];
+                // $dbHost = $orgDetails['IP'];
+                $dbUser = $orgDetails['DBusername'];
+
+                session()->set('dbConfig', [
+                    
+                    'username'     => $dbUser,
+                    'password'     => $dbPassword,
+                    'database'     => $dbName,
+                    
+                ]);
+
+                
+
                 return $this->response->setJSON(
-                    [
-                       
-                        'data' => $ans,
+                    [                      
+                        'data' => $orgDetails,
                         'status' => 200,
                         'message'=>'User is Autherized'
                     ]
@@ -145,5 +156,6 @@ class UserLogin extends BaseController
             ]);
         }
         }
+       
        
 }

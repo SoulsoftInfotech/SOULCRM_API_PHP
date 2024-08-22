@@ -54,13 +54,5 @@ class UserLoginModel extends Model
         // OR $this->db = db_connect();
     }
 
-    public function connectToDatabase($orgcode){
-        if($orgcode==89){          
-            $this->db = \Config\Database::connect('soulsoftDB');
-        }
-        else{         
-            $this->db = \Config\Database::connect('RKEntDB');
-        }
-      
-    }
+    
 }

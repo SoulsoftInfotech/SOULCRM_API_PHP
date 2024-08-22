@@ -47,12 +47,18 @@ class UserLoginModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    // public function __construct()
+    // {
+    //     parent::__construct();
+    //     $this->db = \Config\Database::connect();
+    //     // OR $this->db = db_connect();
+    // }
     public function __construct()
-    {
-        parent::__construct();
-        $this->db = \Config\Database::connect();
-        // OR $this->db = db_connect();
-    }
+{
+    parent::__construct();
+    $this->db = \Config\Database::connect('soulsoftDB');
+}
+
     // protected function hashPassword(array $data)
     // {
     //     if (isset($data['data']['Password'])) {

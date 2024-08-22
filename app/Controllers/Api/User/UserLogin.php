@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\User\UserLoginModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use App\Models\ValidationOrganization\OrganizationAuth;
+
 
 class UserLogin extends BaseController
 {
@@ -99,4 +101,39 @@ class UserLogin extends BaseController
         ];
         return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
+
+
+    public function checkauthcode(){
+        $authCode = $this->request->getVar('AuthCode');
+
+        $orgModel = new OrganizationAuth();
+        if($authCode){
+            $ans = $orgModel->ValidateOrganizationCode($authCode);
+            if($ans){
+                return $this->response->setJSON(
+                    [
+                        'authcode' => $authCode,
+                        'status' => 200,
+                        'message'=>'User is Autherized'
+                    ]
+                    );
+            }
+            else{
+                return $this->response->setJSON(
+                    [
+                       'status' => 404,
+                       'message' => 'Auth Code is invalid'
+                    ]
+                );
+            }
+    
+        }
+        else{
+            return $this->response->setJSON([
+                'status'=> 404,
+                'message' => 'Auth Code is empty'
+            ]);
+        }
+        }
+       
 }

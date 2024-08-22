@@ -44,7 +44,8 @@ class Filters extends BaseConfig
             'authFilter' => [
                 'except' => [
                     'api/users/login', // Make sure this matches the actual route
-                    'api/users/create' // Example of another route that might need exclusion
+                    'api/users/create' ,// Example of another route that might need exclusion
+                    'api/orgs/orgcode' // Example of another route that might need exclusion'
                 ],
             ],
         ],

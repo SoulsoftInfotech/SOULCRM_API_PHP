@@ -121,7 +121,8 @@ class UserLogin extends BaseController
                 
                 return $this->response->setJSON(
                     [
-                        'authcode' => $authCode,
+                       
+                        'data' => $ans,
                         'status' => 200,
                         'message'=>'User is Autherized'
                     ]

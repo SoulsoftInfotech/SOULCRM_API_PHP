@@ -59,4 +59,9 @@ class CustomerModel extends Model
     //     // OR $this->db = db_connect();
     // }
 
+    public function setDatabaseConnection($db)
+    {
+        $this->db = $db;
+    }
+
 }

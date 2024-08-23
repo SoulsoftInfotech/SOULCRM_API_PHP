@@ -106,56 +106,58 @@ class UserLogin extends BaseController
     }
 
 
-    public function checkauthcode(){
+    public function checkauthcode()
+    {
         $authCode = $this->request->getVar('AuthCode');
-
+    
         $orgModel = new OrganizationAuth();
-       
-        if($authCode){
+        
+        if ($authCode) {
             $orgDetails = $orgModel->ValidateOrganizationCode($authCode);
-            if(!empty($orgDetails)){
-                
-                $orgDetails=$orgDetails[0];
+            if (!empty($orgDetails)) {
+                $orgDetails = $orgDetails[0];
                 $dbName = $orgDetails['DBName'];
                 $dbPassword = $orgDetails['DBPassword'];
-                // $dbHost = $orgDetails['IP'];
                 $dbUser = $orgDetails['DBusername'];
-
-                session()->set('dbConfig', [
-                    
-                    'username'     => $dbUser,
-                    'password'     => $dbPassword,
-                    'database'     => $dbName,
-                    
-                ]);
-
-                
-
-                return $this->response->setJSON(
-                    [                      
-                        'data' => $orgDetails,
-                        'status' => 200,
-                        'message'=>'User is Autherized'
-                    ]
-                    );
-            }
-            else{
-                return $this->response->setJSON(
-                    [
-                       'status' => 404,
-                       'message' => 'Auth Code is invalid'
-                    ]
-                );
-            }
     
-        }
-        else{
+                // Set the new database configuration in session
+                session()->set('dbConfig', [
+                    'DSN'      => '',
+                    'hostname' => $orgDetails['IP'] ?? 'localhost', // Use IP from the database details or default to localhost
+                    'username' => $dbUser,
+                    'password' => $dbPassword,
+                    'database' => $dbName,
+                    'DBDriver' => 'MySQLi', // or the appropriate driver
+                    'DBPrefix' => '',
+                    'pConnect' => false,
+                    'DBDebug'  => (ENVIRONMENT !== 'production'),
+                    'charset'  => 'utf8',
+                    'DBCollat' => 'utf8_general_ci',
+                    'swapPre'  => '',
+                    'encrypt'  => false,
+                    'compress' => false,
+                    'strictOn' => false,
+                    'failover' => [],
+                    'port'     => 3306, // Specify the port if different
+                ]);
+    
+                return $this->response->setJSON([
+                    'data' => $orgDetails,
+                    'status' => 200,
+                    'message' => 'User is Authorized'
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'status' => 404,
+                    'message' => 'Auth Code is invalid'
+                ]);
+            }
+        } else {
             return $this->response->setJSON([
                 'status'=> 404,
                 'message' => 'Auth Code is empty'
             ]);
         }
-        }
-       
+    }
        
 }

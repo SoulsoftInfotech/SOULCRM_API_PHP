@@ -109,9 +109,9 @@ class UserLogin extends BaseController
     public function checkauthcode()
     {
         $authCode = $this->request->getVar('AuthCode');
-    
+
         $orgModel = new OrganizationAuth();
-        
+
         if ($authCode) {
             $orgDetails = $orgModel->ValidateOrganizationCode($authCode);
             if (!empty($orgDetails)) {
@@ -119,15 +119,16 @@ class UserLogin extends BaseController
                 $dbName = $orgDetails['DBName'];
                 $dbPassword = $orgDetails['DBPassword'];
                 $dbUser = $orgDetails['DBusername'];
-    
-                // Set the new database configuration in session
-                session()->set('dbConfig', [
+                $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
+
+                // Create new database connection
+                $db = \Config\Database::connect([
                     'DSN'      => '',
-                    'hostname' => $orgDetails['IP'] ?? 'localhost', // Use IP from the database details or default to localhost
+                    'hostname' => 'localhost',
                     'username' => $dbUser,
                     'password' => $dbPassword,
                     'database' => $dbName,
-                    'DBDriver' => 'MySQLi', // or the appropriate driver
+                    'DBDriver' => 'MySQLi',
                     'DBPrefix' => '',
                     'pConnect' => false,
                     'DBDebug'  => (ENVIRONMENT !== 'production'),
@@ -138,11 +139,17 @@ class UserLogin extends BaseController
                     'compress' => false,
                     'strictOn' => false,
                     'failover' => [],
-                    'port'     => 3306, // Specify the port if different
+                    'port'     => 3306,
                 ]);
-    
+
+                // Optionally set this database connection to be used by the models
+                $db->initialize();
+
+                // Use the new database connection
+                // Example: $builder = $db->table('your_table')->get();
+                
                 return $this->response->setJSON([
-                    'data' => $orgDetails,
+                    'data'   => $orgDetails,
                     'status' => 200,
                     'message' => 'User is Authorized'
                 ]);

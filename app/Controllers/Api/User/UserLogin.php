@@ -141,15 +141,6 @@ class UserLogin extends BaseController
                 'failover' => [],
                 'port'     => 3306,
             ]);
-
-            // Initialize the connection
-            $db->initialize();
-
-            // Use this new connection with your models
-            $userModel = new \App\Models\User\UserLoginModel($db);
-
-                // Use the new database connection
-                // Example: $builder = $db->table('your_table')->get();
                 
                 return $this->response->setJSON([
                     'data'   => $orgDetails,
@@ -171,3 +162,5 @@ class UserLogin extends BaseController
     }
        
 }
+
+    

@@ -51,6 +51,11 @@ class UserLoginModel extends Model
             $this->db = $db;
         }
     }
+    public function setDatabaseConnection($db)
+    {
+        $this->db = $db;
+        $this->db->initialize(); // Ensure the database connection is initialized
+    }
      
     // public function __construct()
     // {

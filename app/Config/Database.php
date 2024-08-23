@@ -38,7 +38,7 @@ class Database extends Config
         if ($dbConfig) {
             $this->default = [
                 'DSN'          => $dbConfig['DSN'] ?? '',
-                'hostname'     => $dbConfig['hostname'] ?? 'localhost',
+                'hostname'     =>'localhost',
                 'username'     => $dbConfig['username'] ?? '',
                 'password'     => $dbConfig['password'] ?? '',
                 'database'     => $dbConfig['database'] ?? '',

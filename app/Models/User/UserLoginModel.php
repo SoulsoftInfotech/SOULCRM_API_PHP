@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class UserLoginModel extends Model
 {
     protected $db;
-    protected $DBGroup          = 'soulsoftDB';
+    protected $DBGroup          = '';
     protected $table            = 'employees';
     protected $primaryKey       = 'EmpId';
     // protected $primaryKey       = 'id';

@@ -39,9 +39,9 @@ class Database extends Config
             $this->default = [
                 'DSN'          => $dbConfig['DSN'] ?? '',
                 'hostname'     => $dbConfig['hostname'] ?? 'localhost',
-                'username'     => $dbConfig['username'],
-                'password'     => $dbConfig['password'],
-                'database'     => $dbConfig['database'],
+                'username'     => $dbConfig['username'] ?? '',
+                'password'     => $dbConfig['password'] ?? '',
+                'database'     => $dbConfig['database'] ?? '',
                 'DBDriver'     => $dbConfig['DBDriver'] ?? 'MySQLi',
                 'DBPrefix'     => $dbConfig['DBPrefix'] ?? '',
                 'pConnect'     => $dbConfig['pConnect'] ?? false,

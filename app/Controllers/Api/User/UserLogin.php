@@ -121,29 +121,32 @@ class UserLogin extends BaseController
                 $dbUser = $orgDetails['DBusername'];
                 $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
 
-                // Create new database connection
-                $db = \Config\Database::connect([
-                    'DSN'      => '',
-                    'hostname' => 'localhost',
-                    'username' => $dbUser,
-                    'password' => $dbPassword,
-                    'database' => $dbName,
-                    'DBDriver' => 'MySQLi',
-                    'DBPrefix' => '',
-                    'pConnect' => false,
-                    'DBDebug'  => (ENVIRONMENT !== 'production'),
-                    'charset'  => 'utf8',
-                    'DBCollat' => 'utf8_general_ci',
-                    'swapPre'  => '',
-                    'encrypt'  => false,
-                    'compress' => false,
-                    'strictOn' => false,
-                    'failover' => [],
-                    'port'     => 3306,
-                ]);
+                   // Create new database connection
+            $db = \Config\Database::connect([
+                'DSN'      => '',
+                'hostname' => $dbHost,
+                'username' => $dbUser,
+                'password' => $dbPassword,
+                'database' => $dbName,
+                'DBDriver' => 'MySQLi',
+                'DBPrefix' => '',
+                'pConnect' => false,
+                'DBDebug'  => (ENVIRONMENT !== 'production'),
+                'charset'  => 'utf8',
+                'DBCollat' => 'utf8_general_ci',
+                'swapPre'  => '',
+                'encrypt'  => false,
+                'compress' => false,
+                'strictOn' => false,
+                'failover' => [],
+                'port'     => 3306,
+            ]);
 
-                // Optionally set this database connection to be used by the models
-                $db->initialize();
+            // Initialize the connection
+            $db->initialize();
+
+            // Use this new connection with your models
+            $userModel = new \App\Models\User\UserLoginModel($db);
 
                 // Use the new database connection
                 // Example: $builder = $db->table('your_table')->get();

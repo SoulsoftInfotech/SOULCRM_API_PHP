@@ -51,15 +51,15 @@ class CreateLeadModel extends Model
         // OR $this->db = db_connect();
     }
 
-    public function connectToDatabaseCreateLead($orgcode){
-        if($orgcode==89){          
-            $this->db = \Config\Database::connect('soulsoftDB');
-        }
-        else{         
-            $this->db = \Config\Database::connect('RKEntDB');
-        }
+    // public function connectToDatabaseCreateLead($orgcode){
+    //     if($orgcode==89){          
+    //         $this->db = \Config\Database::connect('soulsoftDB');
+    //     }
+    //     else{         
+    //         $this->db = \Config\Database::connect('RKEntDB');
+    //     }
       
-    }
+    // }
     // public function __construct()
     // {
     //     parent::__construct();

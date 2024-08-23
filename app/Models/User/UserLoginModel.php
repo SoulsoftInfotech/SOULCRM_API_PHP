@@ -6,26 +6,20 @@ use CodeIgniter\Model;
 
 class UserLoginModel extends Model
 {
-    protected $db;
-    protected $DBGroup          = '';
     protected $table            = 'employees';
     protected $primaryKey       = 'EmpId';
-    // protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['EmpId','EmpCode','EmpName','Designation','LoginUserName','Password','Description','CreatedBy','CreatedOn','UpdatedBy','UpdatedOn'];
-
-    // protected bool $allowEmptyInserts = false;
-
+    protected $allowedFields    = ['EmpId', 'EmpCode', 'EmpName', 'Designation', 'LoginUserName', 'Password', 'Description', 'CreatedBy', 'CreatedOn', 'UpdatedBy', 'UpdatedOn'];
 
     // Dates
     protected $useTimestamps = false;
     protected $dateFormat    = 'datetime';
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'CreatedOn';
+    protected $updatedField  = 'UpdatedOn';
+    protected $deletedField  = null; // No soft deletes
 
     // Validation
     protected $validationRules      = [];
@@ -35,12 +29,9 @@ class UserLoginModel extends Model
 
     // Callbacks
     protected $allowCallbacks = true;
-    
     protected $beforeInsert   = [];
-    // protected $beforeInsert   = ['hashPassword'];
     protected $afterInsert    = [];
     protected $beforeUpdate   = [];
-    // protected $beforeUpdate   = ['hashPassword'];
     protected $afterUpdate    = [];
     protected $beforeFind     = [];
     protected $afterFind      = [];
@@ -50,9 +41,8 @@ class UserLoginModel extends Model
     public function __construct()
     {
         parent::__construct();
-        // $this->db = \Config\Database::connect();
-        // OR $this->db = db_connect();
+        $this->db = \Config\Database::connect();
     }
 
-    
+    // Optional: Implement dynamic database connection if needed
 }

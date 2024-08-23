@@ -51,6 +51,24 @@ class UserLogin extends BaseController
     public function login()
     {
         $userLoginModel = new UserLoginModel();
+//-------------------------------------------------------//
+
+    // Retrieve the dynamic database connection from the session
+    $db = session()->get('dynamicDb');
+
+    if (!$db) {
+        return $this->response->setJSON([
+            'msg' => 'Database connection not found. Please authorize first.',
+            'status' => 401
+        ]);
+    }
+
+    // Set the database connection for the user model
+    $userLoginModel->setDatabaseConnection($db);
+
+
+
+    //-----------------------------------------//
         $loginUserName = $this->request->getVar('LoginUserName');
         $password = $this->request->getVar('Password');
     
@@ -142,6 +160,9 @@ class UserLogin extends BaseController
                 'port'     => 3306,
             ]);
                 
+            // Store the database connection in the session
+            session()->set('dynamicDb', $db);
+
                 return $this->response->setJSON([
                     'data'   => $orgDetails,
                     'status' => 200,

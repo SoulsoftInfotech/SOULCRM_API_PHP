@@ -38,11 +38,11 @@ class UserLoginModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->db = \Config\Database::connect();
-    }
+    // public function __construct()
+    // {
+    //     parent::__construct();
+    //     // $this->db = \Config\Database::connect();
+    // }
 
     // Optional: Implement dynamic database connection if needed
 }

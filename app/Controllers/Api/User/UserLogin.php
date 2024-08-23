@@ -20,6 +20,25 @@ class UserLogin extends BaseController
     {
         $userLoginModel = new UserLoginModel();
 
+        //-------------------------------------------------------//
+
+    // Retrieve the dynamic database connection from the session
+    $db = session()->get('dynamicDb');
+
+    if (!$db) {
+        return $this->response->setJSON([
+            'msg' => 'Database connection not found. Please authorize first.',
+            'status' => 401
+        ]);
+    }
+
+    // Set the database connection for the user model
+    $userLoginModel->setDatabaseConnection($db);
+
+
+
+    //-----------------------------------------//
+
         $empData = [
             'EmpId' => $this->request->getVar('EmpId'),
             'EmpCode' => $this->request->getVar('EmpCode'),   

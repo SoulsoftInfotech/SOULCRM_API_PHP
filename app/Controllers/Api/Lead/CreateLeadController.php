@@ -99,6 +99,26 @@ class CreateLeadController extends BaseController
 {
     $leadModel = new CreateLeadModel();
 
+    //-------------------------------------------------------//
+
+    // Retrieve the dynamic database connection from the session
+    $db = session()->get('dynamicDb');
+
+    if (!$db) {
+        return $this->response->setJSON([
+            'msg' => 'Database connection not found. Please authorize first.',
+            'status' => 401
+        ]);
+    }
+
+    // Set the database connection for the user model
+    $leadModel->setDatabaseConnection($db);
+
+
+
+    //-------------------------------------------------------------//
+
+
     // Fetch all lead records from the model
     $leads = $leadModel->getAllLeadsModel();
 

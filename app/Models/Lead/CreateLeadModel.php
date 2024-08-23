@@ -50,6 +50,11 @@ class CreateLeadModel extends Model
         // $this->db = \Config\Database::connect();
         // OR $this->db = db_connect();
     }
+    public function setDatabaseConnection($db)
+    {
+        $this->db = $db;
+        // $this->db->initialize(); // Ensure the database connection is initialized
+    }
 
     // public function connectToDatabaseCreateLead($orgcode){
     //     if($orgcode==89){          

@@ -77,6 +77,7 @@ class UserLogin extends BaseController
          if ($user && $user['Password'] === $password) {
             // if ($user && password_verify($password, $user['Password'])) {
             $issuedAt = time();
+            print_r($issuedAt);
             $expirationTime = $issuedAt + 3600; // JWT valid for 1 hour
             $payload = [
                 'iat' => $issuedAt,
@@ -137,27 +138,32 @@ class UserLogin extends BaseController
                 $dbName = $orgDetails['DBName'];
                 $dbPassword = $orgDetails['DBPassword'];
                 $dbUser = $orgDetails['DBusername'];
-                $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
+                // $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
 
                    // Create new database connection
             $db = \Config\Database::connect([
-                'DSN'      => '',
-                'hostname' => $dbHost,
+
+                'DSN'          => '',
+                'hostname'     => 'localhost',
                 'username' => $dbUser,
                 'password' => $dbPassword,
                 'database' => $dbName,
-                'DBDriver' => 'MySQLi',
-                'DBPrefix' => '',
-                'pConnect' => false,
-                'DBDebug'  => (ENVIRONMENT !== 'production'),
-                'charset'  => 'utf8',
-                'DBCollat' => 'utf8_general_ci',
-                'swapPre'  => '',
-                'encrypt'  => false,
-                'compress' => false,
-                'strictOn' => false,
-                'failover' => [],
-                'port'     => 3306,
+            //    'username'     => 'root',
+            //    'password'     => '',
+            //    'database'     => 'soul_crm',
+                'DBDriver'     => 'MySQLi',
+                'DBPrefix'     => '',
+                'pConnect'     => false,
+                'DBDebug'      => true,
+                'charset'      => 'utf8',
+                'DBCollat'     => 'utf8_general_ci',
+                'swapPre'      => '',
+                'encrypt'      => false,
+                'compress'     => false,
+                'strictOn'     => false,
+                'failover'     => [],
+                'port'         => 3306, // Default MySQL port
+                'numberNative' => false,
             ]);
                 
             // Store the database connection in the session

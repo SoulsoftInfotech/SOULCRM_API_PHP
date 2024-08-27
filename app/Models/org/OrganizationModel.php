@@ -8,7 +8,7 @@ class OrganizationModel extends Model
 {
     protected $db;
     protected $DBGroup          = 'default';
-    protected $table            = 'oraganizationmaster';
+    protected $table            = 'OraganizationMaster';
     protected $primaryKey       = 'Id';
     // protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;

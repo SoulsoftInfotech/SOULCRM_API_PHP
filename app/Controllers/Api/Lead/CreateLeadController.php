@@ -19,14 +19,15 @@ class CreateLeadController extends BaseController
     }
     public function create()
     {
-        $leadModel = new CreateLeadModel();
-
         $dbname = $this->request->getVar('DBNAME');
         $uname = $this->request->getVar('UNAME');
         $pass = $this->request->getVar('PASS');
         $host = $this->request->getVar('HOST');
-        $connectdb = new UserLogin();
-        $dbconnectarray = $connectdb->generateDBarray($dbname,$uname,$pass,$host);
+    
+        $connect=new UserLogin();
+        $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+        $db = \Config\Database::connect($dbconnectarray);
+        $leadModel = new CreateLeadModel($db);
         $leadData = [
             // 'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
@@ -66,7 +67,16 @@ class CreateLeadController extends BaseController
 
     public function update($id)
     {
-        $leadModel = new CreateLeadModel();
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
+    
+        $connect=new UserLogin();
+        $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+        $db = \Config\Database::connect($dbconnectarray);
+        
+        $leadModel = new CreateLeadModel($db);
 
         $leadData = [
             'LeadId' => $this->request->getVar('LeadId'),
@@ -144,8 +154,17 @@ class CreateLeadController extends BaseController
 
     public function updateWithCustomer($id)
     {
-        $leadModel = new CreateLeadModel();
-        $customerModel = new CustomerModel();
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
+    
+        $connect=new UserLogin();
+        $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+        $db = \Config\Database::connect($dbconnectarray);
+
+        $leadModel = new CreateLeadModel($db);
+        $customerModel = new CustomerModel($db);
     
         // Prepare lead data
         $leadData = [
@@ -220,7 +239,18 @@ class CreateLeadController extends BaseController
 
     public function getAllCustomers()
     {
-        $customerModel = new CustomerModel();
+
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
+    
+        $connect=new UserLogin();
+        $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+        $db = \Config\Database::connect($dbconnectarray);
+
+
+        $customerModel = new CustomerModel($db);
     
         // Fetch all customer records from the model
         $customers = $customerModel->findAll();
@@ -241,7 +271,16 @@ class CreateLeadController extends BaseController
     
     public function getCustomerById($id)
 {
-    $customerModel = new CustomerModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $customerModel = new CustomerModel($db);
 
     // Fetch customer record by ID
     $customer = $customerModel->find($id);
@@ -262,6 +301,15 @@ class CreateLeadController extends BaseController
 
 public function itemExcelUpload()
 {
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
     // Get the uploaded file
     $file = $this->request->getFile('excel_file');
 
@@ -331,7 +379,7 @@ public function itemExcelUpload()
             $rowData[] = $rowAsKeyValue;
         }
 
-        $CreateLeadModel = new CreateLeadModel();
+        $CreateLeadModel = new CreateLeadModel($db);
         if ($CreateLeadModel->insertBatch($rowData)) {
             // Respond with success message and the data
             $response = [
@@ -360,6 +408,16 @@ public function itemExcelUpload()
 
 
 public function leadOptions() {
+
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
     $leadArray = array(
         "Lead",//4          
         "Potential",//3     
@@ -384,7 +442,16 @@ public function leadOptions() {
 
 
 public function getAllCustomer(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findCustomerData();
 
     if($bookingdone){
@@ -403,7 +470,16 @@ public function getAllCustomer(){
 }
 
 public function getAllDataEntry(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findDataEntryData();
 
     if($bookingdone){
@@ -422,7 +498,16 @@ public function getAllDataEntry(){
 }
 
 public function getAllVisitRequired(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findVisitRequiredData();
 
     if($bookingdone){
@@ -441,7 +526,16 @@ public function getAllVisitRequired(){
 }
 
 public function getAllBookingDone(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findBookingData();
 
     if($bookingdone){
@@ -460,7 +554,16 @@ public function getAllBookingDone(){
 }
 
 public function getAllInstallation(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findInstallationData();
 
     if($bookingdone){
@@ -479,7 +582,16 @@ public function getAllInstallation(){
 }
 
 public function getAllPotential(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findPotentialData();
 
     if($bookingdone){
@@ -498,7 +610,16 @@ public function getAllPotential(){
 }
 
 public function getAllDemo(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findDemoData();
 
     if($bookingdone){
@@ -517,7 +638,16 @@ public function getAllDemo(){
 }
 
 public function getAllCallBack(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findCallBackData();
 
     if($bookingdone){
@@ -537,7 +667,16 @@ public function getAllCallBack(){
 
 
 public function getAllNotInterested(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $bookingdone=$CreateLeadModel->findNotInterestedData();
 
     if($bookingdone){
@@ -565,7 +704,16 @@ public function getAllNotInterested(){
 
 
 public function countPotentialtype(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $number=$CreateLeadModel->countPotential();
 
     if($number){
@@ -584,7 +732,16 @@ public function countPotentialtype(){
     }
 }
 public function countLeadstype(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $number=$CreateLeadModel->countLeads();
 
     if($number){
@@ -603,7 +760,16 @@ public function countLeadstype(){
     }
 }
 public function countInstallationtype(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $number=$CreateLeadModel->countInstallation();
 
     if($number){
@@ -622,7 +788,16 @@ public function countInstallationtype(){
     }
 }
 public function countBookingDonetype(){
-    $CreateLeadModel = new CreateLeadModel();
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $number=$CreateLeadModel->countBookingDone();
 
     if($number){

@@ -43,13 +43,22 @@ class CreateLeadModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-
-    public function __construct()
+    protected $db; // Add this property to hold the dynamic database connection
+    public function __construct($db = null)
     {
         parent::__construct();
-        // $this->db = \Config\Database::connect();
-        // OR $this->db = db_connect();
+
+        // If a dynamic database connection is provided, use it
+        if ($db !== null) {
+            $this->db = $db;
+        }
     }
+    // public function __construct()
+    // {
+    //     parent::__construct();
+    //     // $this->db = \Config\Database::connect();
+    //     // OR $this->db = db_connect();
+    // }
     public function setDatabaseConnection($db)
     {
         $this->db = $db;

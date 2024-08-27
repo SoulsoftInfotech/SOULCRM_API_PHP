@@ -45,24 +45,27 @@ class UserLogin extends BaseController
 
     public function login()
     {
-      
         $loginUserName = $this->request->getVar('LoginUserName');
         $password = $this->request->getVar('Password');
-    
 
         $dbname = $this->request->getVar('DBNAME');
         $uname = $this->request->getVar('UNAME');
         $pass = $this->request->getVar('PASS');
         $host = $this->request->getVar('HOST');
 
-        $dbconnectarray = $this->generateDBarray($dbname,$uname,$pass,$host);
-        $userLoginModel = new UserLoginModel($dbconnectarray);
-        // $dbcon=\Config\Database::connect($dbconnectarray);
+        // Generate the database connection array
+        $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
+        echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
+
+        // Create a new database connection using the generated array
+        $db = \Config\Database::connect($dbconnectarray);
+
+        // Pass the custom database connection to the model
+        $userLoginModel = new UserLoginModel($db);
 
         $user = $userLoginModel->where('LoginUserName', $loginUserName)->first();
-    
-         if ($user && $user['Password'] === $password) {
-            // if ($user && password_verify($password, $user['Password'])) {
+
+        if ($user && $user['Password'] === $password) {
             $issuedAt = time();
             $expirationTime = $issuedAt + 3600; // JWT valid for 1 hour
             $payload = [
@@ -71,11 +74,11 @@ class UserLogin extends BaseController
                 'sub' => $user['EmpId'],
                 'username' => $user['LoginUserName'],
             ];
-    
+
             $jwt = JWT::encode($payload, $this->jwtSecret, 'HS256');
-    
+
             $response = [
-                'msg' => 'user login successfully!',
+                'msg' => 'User login successfully!',
                 'userid' => $user['EmpId'],
                 'url' => 'http://localhost:8080/',
                 'type' => 'master',
@@ -91,16 +94,14 @@ class UserLogin extends BaseController
                     'userid' => $user['EmpId'],
                 ]
             ];
-    
+
             return $this->response->setJSON($response);
         }
-    
+
         return $this->response->setJSON([
             'msg' => 'Invalid username or password',
             'status' => 401
         ]);
-
-        $db->close();
     }
     
     private function generateRefreshToken($userId)
@@ -112,9 +113,7 @@ class UserLogin extends BaseController
         return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
 
-
-
-    public function generateDBarray($dbname,$uname,$pass,$host)
+    public function generateDBarray($dbname, $uname, $pass, $host)
     {
         $custom = [
             'DSN'      => '',

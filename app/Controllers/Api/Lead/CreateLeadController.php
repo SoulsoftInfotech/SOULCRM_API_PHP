@@ -104,71 +104,42 @@ class CreateLeadController extends BaseController
     }
 
     public function getAllLeads()
-{
-    $leadModel = new CreateLeadModel();
-    $dbname = $this->request->getVar('DBNAME');
-    $uname = $this->request->getVar('UNAME');
-    $pass = $this->request->getVar('PASS');
-    $host = $this->request->getVar('HOST');
-    $connectdb = new UserLogin();
-    $dbconnectarray = $connectdb->generateDBarray($dbname,$uname,$pass,$host);
-    // Fetch all lead records from the model
-    $leads = $leadModel->getAllLeadsModel();
+    {
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
 
-    if ($leads) {
+        $connect=new UserLogin();
+        $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+        $db = \Config\Database::connect($dbconnectarray);
+
+        $leadModel = new CreateLeadModel($db);
+
+        try {
+            $leads = $leadModel->getAllLeadsModel();
+        } catch (\Exception $e) {
+            log_message('error', 'Error fetching leads: ' . $e->getMessage());
+            return $this->response->setJSON([
+                'status' => 500,
+                'message' => 'Failed to fetch leads'
+            ]);
+        }
+
+        if ($leads) {
+            return $this->response->setJSON([
+                'status' => 200,
+                'message' => 'Leads retrieved successfully',
+                'data' => $leads
+            ]);
+        }
+
         return $this->response->setJSON([
-            'status' => 200,
-            'message' => 'Leads retrieved successfully',
-            'data' => $leads
+            'status' => 404,
+            'message' => 'No leads found'
         ]);
     }
 
-    return $this->response->setJSON([
-        'status' => 404,
-        'message' => 'No leads found'
-    ]);
-}
-public function getAllLeadswithCustomer()
-{
-    $leadModel = new CreateLeadModel();
-
-    // Fetch all lead records from the model
-    $leads = $leadModel->findAll();
-
-    if ($leads) {
-        return $this->response->setJSON([
-            'status' => 200,
-            'message' => 'Leads and customer retrieved successfully',
-            'data' => $leads
-        ]);
-    }
-
-    return $this->response->setJSON([
-        'status' => 404,
-        'message' => 'No leads found'
-    ]);
-}
-
-public function getLeadById($id)
-{
-    $leadModel = new CreateLeadModel();
-
-    // Fetch lead record by ID from the model
-    $lead = $leadModel->find($id);
-
-    if ($lead) {
-        return $this->response->setJSON([
-            'status' => 200,
-            'message' => 'Lead retrieved successfully',
-            'data' => $lead
-        ]);
-    }
-
-    return $this->response->setJSON([
-        'status' => 404,
-        'message' => 'Lead not found'
-    ]);
-}
 
 
     public function updateWithCustomer($id)

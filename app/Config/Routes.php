@@ -15,6 +15,12 @@ use CodeIgniter\Router\RouteCollection;
 // );
 
 
+$routes->group("api/org",function($routes){
+
+    $routes->post('getdts','Api\org\OrganizationController::getorgdtls');
+}
+);
+
 
 $routes->group("api/users",function($routes){
 
@@ -22,11 +28,6 @@ $routes->group("api/users",function($routes){
     $routes->post('login','Api\User\UserLogin::login');
 }
 );
-$routes->group("api/orgs",function($routes){
-
-    $routes->post('orgcode','Api\User\UserLogin::checkauthcode');
-    
-});
 $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
      
     //-----------------------------create ,update,upload-----------------------//

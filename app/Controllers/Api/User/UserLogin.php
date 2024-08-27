@@ -3,14 +3,9 @@
 namespace App\Controllers\Api\User;
 
 use App\Controllers\BaseController;
-use App\Models\Lead\CreateLeadModel;
-use App\Models\Lead\CustomerModel;
 use App\Models\User\UserLoginModel;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use CodeIgniter\Database\Config;
-use App\Models\ValidationOrganization\OrganizationAuth;
-
 
 class UserLogin extends BaseController
 {
@@ -19,25 +14,6 @@ class UserLogin extends BaseController
     public function create()
     {
         $userLoginModel = new UserLoginModel();
-
-        //-------------------------------------------------------//
-
-    // Retrieve the dynamic database connection from the session
-    // $db = session()->get('dynamicDb');
-
-    // if (!$db) {
-    //     return $this->response->setJSON([
-    //         'msg' => 'Database connection not found. Please authorize first.',
-    //         'status' => 401
-    //     ]);
-    // }
-
-    // Set the database connection for the user model
-    // $userLoginModel->setDatabaseConnection($db);
-
-
-
-    //-----------------------------------------//
 
         $empData = [
             'EmpId' => $this->request->getVar('EmpId'),
@@ -69,34 +45,25 @@ class UserLogin extends BaseController
 
     public function login()
     {
-        $userLoginModel = new UserLoginModel();
-//-------------------------------------------------------//
-
-    // Retrieve the dynamic database connection from the session
-    // $db = session()->get('dynamicDb');
-
-    // if (!$db) {
-    //     return $this->response->setJSON([
-    //         'msg' => 'Database connection not found. Please authorize first.',
-    //         'status' => 401
-    //     ]);
-    // }
-
-    // Set the database connection for the user model
-    // $userLoginModel->setDatabaseConnection($db);
-
-
-
-    //-----------------------------------------//
+      
         $loginUserName = $this->request->getVar('LoginUserName');
         $password = $this->request->getVar('Password');
     
+
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
+
+        $dbconnectarray = $this->generateDBarray($dbname,$uname,$pass,$host);
+        $userLoginModel = new UserLoginModel($dbconnectarray);
+        // $dbcon=\Config\Database::connect($dbconnectarray);
+
         $user = $userLoginModel->where('LoginUserName', $loginUserName)->first();
     
          if ($user && $user['Password'] === $password) {
             // if ($user && password_verify($password, $user['Password'])) {
             $issuedAt = time();
-            print_r($issuedAt);
             $expirationTime = $issuedAt + 3600; // JWT valid for 1 hour
             $payload = [
                 'iat' => $issuedAt,
@@ -132,6 +99,8 @@ class UserLogin extends BaseController
             'msg' => 'Invalid username or password',
             'status' => 401
         ]);
+
+        $db->close();
     }
     
     private function generateRefreshToken($userId)
@@ -143,7 +112,9 @@ class UserLogin extends BaseController
         return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
 
-    public function generateDBarray($dbname,$uname,$pass,$host)
+
+
+    private function generateDBarray($dbname,$uname,$pass,$host)
     {
         $custom = [
             'DSN'      => '',
@@ -167,69 +138,4 @@ class UserLogin extends BaseController
 
         return $custom;
     }
-    // public function checkauthcode()
-    // {
-    //     $authCode = $this->request->getVar('AuthCode');
-
-    //     $orgModel = new OrganizationAuth();
-
-    //     if ($authCode) {
-    //         $orgDetails = $orgModel->ValidateOrganizationCode($authCode);
-    //         if (!empty($orgDetails)) {
-    //             $orgDetails = $orgDetails[0];
-    //             $dbName = $orgDetails['DBName'];
-    //             $dbPassword = $orgDetails['DBPassword'];
-    //             $dbUser = $orgDetails['DBusername'];
-    //             // $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
-
-    //                // Create new database connection
-    //         $db = \Config\Database::connect([
-
-    //             'DSN'          => '',
-    //             'hostname'     => 'localhost',
-    //             'username' => $dbUser,
-    //             'password' => $dbPassword,
-    //             'database' => $dbName,
-    //         //    'username'     => 'root',
-    //         //    'password'     => '',
-    //         //    'database'     => 'soul_crm',
-    //             'DBDriver'     => 'MySQLi',
-    //             'DBPrefix'     => '',
-    //             'pConnect'     => false,
-    //             'DBDebug'      => true,
-    //             'charset'      => 'utf8',
-    //             'DBCollat'     => 'utf8_general_ci',
-    //             'swapPre'      => '',
-    //             'encrypt'      => false,
-    //             'compress'     => false,
-    //             'strictOn'     => false,
-    //             'failover'     => [],
-    //             'port'         => 3306, // Default MySQL port
-    //             'numberNative' => false,
-    //         ]);
-                
-    //         // Store the database connection in the session
-    //         session()->set('dynamicDb', $db);
-
-    //             return $this->response->setJSON([
-    //                 'data'   => $orgDetails,
-    //                 'status' => 200,
-    //                 'message' => 'User is Authorized'
-    //             ]);
-    //         } else {
-    //             return $this->response->setJSON([
-    //                 'status' => 404,
-    //                 'message' => 'Auth Code is invalid'
-    //             ]);
-    //         }
-    //     } else {
-    //         return $this->response->setJSON([
-    //             'status'=> 404,
-    //             'message' => 'Auth Code is empty'
-    //         ]);
-    //     }
-    // }
-       
 }
-
-    

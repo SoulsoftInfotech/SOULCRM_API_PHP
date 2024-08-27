@@ -7,9 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Lead\CreateLeadModel;
 use App\Models\Lead\CustomerModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-// use App\Models\org\OrganizationModel;
 
-use App\Controllers\Api\User\UserLogin;
 
 class CreateLeadController extends BaseController
 {
@@ -20,13 +18,7 @@ class CreateLeadController extends BaseController
     public function create()
     {
         $leadModel = new CreateLeadModel();
-        $dbname = $this->request->getVar('DBNAME');
-        $uname = $this->request->getVar('UNAME');
-        $pass = $this->request->getVar('PASS');
-        $host = $this->request->getVar('HOST');
 
-        $generateDB = new UserLogin();
-        $dbconnectarray = $generateDB->generateDBarray($dbname,$uname,$pass,$host);
         $leadData = [
             // 'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
@@ -67,13 +59,7 @@ class CreateLeadController extends BaseController
     public function update($id)
     {
         $leadModel = new CreateLeadModel();
-        $dbname = $this->request->getVar('DBNAME');
-        $uname = $this->request->getVar('UNAME');
-        $pass = $this->request->getVar('PASS');
-        $host = $this->request->getVar('HOST');
 
-        $generateDB = new UserLogin();
-        $dbconnectarray = $generateDB->generateDBarray($dbname,$uname,$pass,$host);
         $leadData = [
             'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
@@ -112,26 +98,6 @@ class CreateLeadController extends BaseController
     public function getAllLeads()
 {
     $leadModel = new CreateLeadModel();
-
-    //-------------------------------------------------------//
-
-    // Retrieve the dynamic database connection from the session
-    $db = session()->get('dynamicDb');
-
-    if (!$db) {
-        return $this->response->setJSON([
-            'msg' => 'Database connection not found. Please authorize first.',
-            'status' => 401
-        ]);
-    }
-
-    // Set the database connection for the user model
-    $leadModel->setDatabaseConnection($db);
-
-
-
-    //-------------------------------------------------------------//
-
 
     // Fetch all lead records from the model
     $leads = $leadModel->getAllLeadsModel();

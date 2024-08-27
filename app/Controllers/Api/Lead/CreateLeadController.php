@@ -643,6 +643,16 @@ public function countBookingDonetype(){
 
 
 public function countAllTypes(){
+
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+    
     $CreateLeadModel = new CreateLeadModel();
     $number=$CreateLeadModel->countAllTypes();
     if($number){

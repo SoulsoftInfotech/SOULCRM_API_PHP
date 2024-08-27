@@ -23,17 +23,17 @@ class UserLogin extends BaseController
         //-------------------------------------------------------//
 
     // Retrieve the dynamic database connection from the session
-    $db = session()->get('dynamicDb');
+    // $db = session()->get('dynamicDb');
 
-    if (!$db) {
-        return $this->response->setJSON([
-            'msg' => 'Database connection not found. Please authorize first.',
-            'status' => 401
-        ]);
-    }
+    // if (!$db) {
+    //     return $this->response->setJSON([
+    //         'msg' => 'Database connection not found. Please authorize first.',
+    //         'status' => 401
+    //     ]);
+    // }
 
     // Set the database connection for the user model
-    $userLoginModel->setDatabaseConnection($db);
+    // $userLoginModel->setDatabaseConnection($db);
 
 
 
@@ -73,17 +73,17 @@ class UserLogin extends BaseController
 //-------------------------------------------------------//
 
     // Retrieve the dynamic database connection from the session
-    $db = session()->get('dynamicDb');
+    // $db = session()->get('dynamicDb');
 
-    if (!$db) {
-        return $this->response->setJSON([
-            'msg' => 'Database connection not found. Please authorize first.',
-            'status' => 401
-        ]);
-    }
+    // if (!$db) {
+    //     return $this->response->setJSON([
+    //         'msg' => 'Database connection not found. Please authorize first.',
+    //         'status' => 401
+    //     ]);
+    // }
 
     // Set the database connection for the user model
-    $userLoginModel->setDatabaseConnection($db);
+    // $userLoginModel->setDatabaseConnection($db);
 
 
 
@@ -143,69 +143,92 @@ class UserLogin extends BaseController
         return JWT::encode($payload, $this->jwtSecret, 'HS256');
     }
 
-
-    public function checkauthcode()
+    public function generateDBarray($dbname,$uname,$pass,$host)
     {
-        $authCode = $this->request->getVar('AuthCode');
+        $custom = [
+            'DSN'      => '',
+            'hostname' => $host,
+            'username' => $uname,
+            'password' => $pass,
+            'database' => $dbname,
+            'DBDriver' => 'MySQLi',
+            'DBPrefix' => '',
+            'pConnect' => false,
+            'DBDebug'  => true,
+            'charset'  => 'utf8mb4',
+            'DBCollat' => 'utf8mb4_general_ci',
+            'swapPre'  => '',
+            'encrypt'  => false,
+            'compress' => false,
+            'strictOn' => false,
+            'failover' => [],
+            'port'     => 3306,
+        ];
 
-        $orgModel = new OrganizationAuth();
-
-        if ($authCode) {
-            $orgDetails = $orgModel->ValidateOrganizationCode($authCode);
-            if (!empty($orgDetails)) {
-                $orgDetails = $orgDetails[0];
-                $dbName = $orgDetails['DBName'];
-                $dbPassword = $orgDetails['DBPassword'];
-                $dbUser = $orgDetails['DBusername'];
-                // $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
-
-                   // Create new database connection
-            $db = \Config\Database::connect([
-
-                'DSN'          => '',
-                'hostname'     => 'localhost',
-                'username' => $dbUser,
-                'password' => $dbPassword,
-                'database' => $dbName,
-            //    'username'     => 'root',
-            //    'password'     => '',
-            //    'database'     => 'soul_crm',
-                'DBDriver'     => 'MySQLi',
-                'DBPrefix'     => '',
-                'pConnect'     => false,
-                'DBDebug'      => true,
-                'charset'      => 'utf8',
-                'DBCollat'     => 'utf8_general_ci',
-                'swapPre'      => '',
-                'encrypt'      => false,
-                'compress'     => false,
-                'strictOn'     => false,
-                'failover'     => [],
-                'port'         => 3306, // Default MySQL port
-                'numberNative' => false,
-            ]);
-                
-            // Store the database connection in the session
-            session()->set('dynamicDb', $db);
-
-                return $this->response->setJSON([
-                    'data'   => $orgDetails,
-                    'status' => 200,
-                    'message' => 'User is Authorized'
-                ]);
-            } else {
-                return $this->response->setJSON([
-                    'status' => 404,
-                    'message' => 'Auth Code is invalid'
-                ]);
-            }
-        } else {
-            return $this->response->setJSON([
-                'status'=> 404,
-                'message' => 'Auth Code is empty'
-            ]);
-        }
+        return $custom;
     }
+    // public function checkauthcode()
+    // {
+    //     $authCode = $this->request->getVar('AuthCode');
+
+    //     $orgModel = new OrganizationAuth();
+
+    //     if ($authCode) {
+    //         $orgDetails = $orgModel->ValidateOrganizationCode($authCode);
+    //         if (!empty($orgDetails)) {
+    //             $orgDetails = $orgDetails[0];
+    //             $dbName = $orgDetails['DBName'];
+    //             $dbPassword = $orgDetails['DBPassword'];
+    //             $dbUser = $orgDetails['DBusername'];
+    //             // $dbHost = $orgDetails['IP'] ?? 'localhost'; // Default to localhost if IP is not provided
+
+    //                // Create new database connection
+    //         $db = \Config\Database::connect([
+
+    //             'DSN'          => '',
+    //             'hostname'     => 'localhost',
+    //             'username' => $dbUser,
+    //             'password' => $dbPassword,
+    //             'database' => $dbName,
+    //         //    'username'     => 'root',
+    //         //    'password'     => '',
+    //         //    'database'     => 'soul_crm',
+    //             'DBDriver'     => 'MySQLi',
+    //             'DBPrefix'     => '',
+    //             'pConnect'     => false,
+    //             'DBDebug'      => true,
+    //             'charset'      => 'utf8',
+    //             'DBCollat'     => 'utf8_general_ci',
+    //             'swapPre'      => '',
+    //             'encrypt'      => false,
+    //             'compress'     => false,
+    //             'strictOn'     => false,
+    //             'failover'     => [],
+    //             'port'         => 3306, // Default MySQL port
+    //             'numberNative' => false,
+    //         ]);
+                
+    //         // Store the database connection in the session
+    //         session()->set('dynamicDb', $db);
+
+    //             return $this->response->setJSON([
+    //                 'data'   => $orgDetails,
+    //                 'status' => 200,
+    //                 'message' => 'User is Authorized'
+    //             ]);
+    //         } else {
+    //             return $this->response->setJSON([
+    //                 'status' => 404,
+    //                 'message' => 'Auth Code is invalid'
+    //             ]);
+    //         }
+    //     } else {
+    //         return $this->response->setJSON([
+    //             'status'=> 404,
+    //             'message' => 'Auth Code is empty'
+    //         ]);
+    //     }
+    // }
        
 }
 

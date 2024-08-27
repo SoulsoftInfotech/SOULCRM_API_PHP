@@ -100,7 +100,7 @@ class UserLogin extends BaseController
             'status' => 401
         ]);
 
-        // $db->close();
+         $db->close();
     }
     
     private function generateRefreshToken($userId)
@@ -114,7 +114,7 @@ class UserLogin extends BaseController
 
 
 
-    private function generateDBarray($dbname,$uname,$pass,$host)
+    public function generateDBarray($dbname,$uname,$pass,$host)
     {
         $custom = [
             'DSN'      => '',

@@ -652,8 +652,8 @@ public function countAllTypes(){
     $connect=new UserLogin();
     $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
     $db = \Config\Database::connect($dbconnectarray);
-    
-    $CreateLeadModel = new CreateLeadModel();
+
+    $CreateLeadModel = new CreateLeadModel($db);
     $number=$CreateLeadModel->countAllTypes();
     if($number){
         return $this->response->setJSON(

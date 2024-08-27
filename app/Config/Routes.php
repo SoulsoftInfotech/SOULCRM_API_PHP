@@ -61,7 +61,7 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
     $routes->get('countbookingdone','Api\Lead\CreateLeadController::countBookingDonetype');
 
     //---------------------------------count of all leads types---------------------//
-    $routes->get('countofall','Api\Lead\CreateLeadController::countAllTypes');
+    $routes->post('countofall','Api\Lead\CreateLeadController::countAllTypes');
 }
 );
 

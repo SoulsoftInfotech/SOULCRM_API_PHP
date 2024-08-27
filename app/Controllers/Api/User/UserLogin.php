@@ -55,7 +55,7 @@ class UserLogin extends BaseController
 
         // Generate the database connection array
         $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
-        echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
+        // echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
 
         // Create a new database connection using the generated array
         $db = \Config\Database::connect($dbconnectarray);

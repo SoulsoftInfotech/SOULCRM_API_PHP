@@ -17,6 +17,11 @@ class OrganizationController extends BaseController
 
         $orgdata = $orgmodel->where('OrgCode', $orgcode)->findAll();
 
+        foreach ($orgdata as &$organization) {
+            if (isset($organization['DBusername'])) {
+                $organization['DBusername'] = trim($organization['DBusername']);
+            }
+        }
         return $this->response->setJSON([
             'status' => 200,
             'message' => 'Organization data featched successfully',

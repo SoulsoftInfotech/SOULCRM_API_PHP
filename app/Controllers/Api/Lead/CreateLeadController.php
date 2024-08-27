@@ -2,11 +2,13 @@
 
 namespace App\Controllers\Api\Lead;
 
+use App\Controllers\Api\User\UserLogin;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Lead\CreateLeadModel;
 use App\Models\Lead\CustomerModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+
 
 
 class CreateLeadController extends BaseController
@@ -19,6 +21,12 @@ class CreateLeadController extends BaseController
     {
         $leadModel = new CreateLeadModel();
 
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
+        $connectdb = new UserLogin();
+        $dbconnectarray = $connectdb->generateDBarray($dbname,$uname,$pass,$host);
         $leadData = [
             // 'LeadId' => $this->request->getVar('LeadId'),
             'LeadNo' => $this->request->getVar('LeadNo'),
@@ -98,7 +106,12 @@ class CreateLeadController extends BaseController
     public function getAllLeads()
 {
     $leadModel = new CreateLeadModel();
-
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+    $connectdb = new UserLogin();
+    $dbconnectarray = $connectdb->generateDBarray($dbname,$uname,$pass,$host);
     // Fetch all lead records from the model
     $leads = $leadModel->getAllLeadsModel();
 

@@ -100,7 +100,7 @@ class UserLogin extends BaseController
             'status' => 401
         ]);
 
-        $db->close();
+        // $db->close();
     }
     
     private function generateRefreshToken($userId)

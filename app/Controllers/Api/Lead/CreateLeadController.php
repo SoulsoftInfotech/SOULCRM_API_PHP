@@ -847,4 +847,34 @@ public function countAllTypes(){
         ]);
     }
 }
+
+public function followUpData($id){
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
+    $number=$CreateLeadModel->findFollowUpDataAll($id);
+
+    if($number){
+        return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Follow Up data retrieved successfully',
+            'data'=>$number
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status'=>404,
+            'message'=>'No data found for Follow Up',
+            'data'=>0
+        ]);
+    }
+
+}
 }

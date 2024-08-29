@@ -289,4 +289,10 @@ class CreateLeadModel extends Model
         $bookingDone =$this->where('LeadStatus','Booking Done')->countAllResults();
         return array('leads'=>$leads,'potential'=>$potential,'installation'=>$installation,'bookingDone'=>$bookingDone);
     }
+
+
+
+    public function findFollowUpDataAll($id){
+        return $this->where('LeadId',$id)->findAll();
+    }
 }

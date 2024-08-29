@@ -62,6 +62,10 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
 
     //---------------------------------count of all leads types---------------------//
     $routes->post('countofall','Api\Lead\CreateLeadController::countAllTypes');
+
+
+    //----------------------------------------followup data-------------------------//
+    $routes->post('followup','Api\Lead\CreateLeadController::followUpData');
 }
 );
 

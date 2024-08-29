@@ -65,7 +65,7 @@ $routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
 
 
     //----------------------------------------followup data-------------------------//
-    $routes->post('followup','Api\Lead\CreateLeadController::followUpData');
+    $routes->post('followup/(:num)','Api\Lead\CreateLeadController::followUpData/$1');
 }
 );
 

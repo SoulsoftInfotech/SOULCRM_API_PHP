@@ -13,8 +13,19 @@ class UserLogin extends BaseController
 
     public function create()
     {
-        $userLoginModel = new UserLoginModel();
+        
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
 
+        // Generate the database connection array
+        $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
+        // echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
+
+        // Create a new database connection using the generated array
+        $db = \Config\Database::connect($dbconnectarray);
+        $userLoginModel = new UserLoginModel($db);
         $empData = [
             'EmpId' => $this->request->getVar('EmpId'),
             'EmpCode' => $this->request->getVar('EmpCode'),   

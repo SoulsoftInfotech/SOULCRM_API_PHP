@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class UserLoginModel extends Model
 {
-    protected $table            = 'employees';
+    protected $table            = 'Employees';
     protected $primaryKey       = 'EmpId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

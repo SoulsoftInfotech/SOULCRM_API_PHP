@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class CustomerModel extends Model
 {
-    protected $table            = 'bookings';
+    protected $table            = 'Bookings';
     protected $primaryKey       = 'BookingId';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';

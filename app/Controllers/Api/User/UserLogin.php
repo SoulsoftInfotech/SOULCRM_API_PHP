@@ -91,6 +91,7 @@ class UserLogin extends BaseController
             $response = [
                 'msg' => 'User login successfully!',
                 'userid' => $user['EmpId'],
+                'designation'=>$user['Designation'],
                 'url' => 'http://localhost:8080/',
                 'type' => 'master',
                 'status' => 200,
@@ -148,4 +149,132 @@ class UserLogin extends BaseController
 
         return $custom;
     }
+
+    public function getAllEmployee()
+{
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    // Generate the database connection array
+    $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
+    // echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
+
+    // Create a new database connection using the generated array
+    $db = \Config\Database::connect($dbconnectarray);
+
+    // Pass the custom database connection to the model
+    $userLoginModel = new UserLoginModel($db);
+
+    $users = $userLoginModel->findAll();
+
+    if ($users) {
+        // Debugging
+        log_message('info', 'Users fetched successfully: ' . print_r($users, true));
+
+        return $this->response->setJSON([
+            'data' => $users,
+            'message' => 'All Employees',
+        ]);
+    } else {
+        // Debugging
+        log_message('info', 'No users found.');
+
+        return $this->response->setJSON([
+            'data' => [],
+            'message' => 'No Employees Found',
+        ]);
+    }
+}
+
+public function update($empCode){
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+
+    // Generate the database connection array
+    $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
+    // echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
+
+    // Create a new database connection using the generated array
+    $db = \Config\Database::connect($dbconnectarray);
+
+    // Pass the custom database connection to the model
+    $userLoginModel = new UserLoginModel($db);
+   
+
+    $employee = $userLoginModel->where('EmpCode', $empCode)->first();
+
+    if(!$employee){
+        return $this->response->setJSON([
+           'status' => 404,
+            'error' => 'Employee not found',
+        ]);
+    }
+    $updatedData = [
+        'EmpCode' => $this->request->getVar('EmpCode'),
+        'EmpName' => $this->request->getVar('EmpName'),
+        'Designation' => $this->request->getVar('Designation'),
+        'LoginUserName' => $this->request->getVar('LoginUserName'),
+        'Password' => $this->request->getVar('Password'),
+        'Description' => $this->request->getVar('Description'),
+        'UpdatedBy' => $this->request->getVar('UpdatedBy'),
+        'UpdatedOn' => date('Y-m-d H:i:s'),
+    ];
+
+    $userLoginModel->update($employee['EmpId'],$updatedData);
+
+    return $this->response->setJSON([
+       'status' => 200,
+        'data' => $updatedData,
+       'message' => 'Employee updated successfully',
+    ]);
+}
+
+public function deleteemp($empcode){
+    $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
+
+        // Generate the database connection array
+        $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
+        // echo "Connecting to database: " . json_encode($dbconnectarray, JSON_PRETTY_PRINT) . "\n";
+
+        // Create a new database connection using the generated array
+        $db = \Config\Database::connect($dbconnectarray);
+
+        // Pass the custom database connection to the model
+        $userLoginModel = new UserLoginModel($db);
+
+    $employee=$userLoginModel->where('empcode',$empcode)->first();
+
+    if(empty($employee)){
+        return $this->response->setJSON(
+            [
+                'status'=>404,
+                'error'=>'Employee not found'
+            ]
+            );
+    }
+    else{
+        $userLoginModel->where('empcode',$empcode)->delete();
+        try {
+            return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Employee deleted successfully'
+            ]);
+        }
+        catch(\Exception $e){
+            return $this->response->setJSON([
+                'status'=>500,
+                'error'=>'Error while deleting employee'
+            ]);
+        }
+    }
+}
+
+
 }

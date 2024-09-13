@@ -35,8 +35,8 @@ $routes->group(
 
 $routes->group('api/users', ['filter' => 'authFilter'], function ($routes) {
     $routes->post('getallemp', 'Api\User\UserLogin::getAllEmployee');
-    $routes->post('update', 'Api\User\UserLogin::update');
-    $routes->post('deleteemp', 'Api\User\UserLogin::deleteemp');
+    $routes->post('update/(:num)', 'Api\User\UserLogin::update/$1');
+    $routes->post('deleteemp/(:num)', 'Api\User\UserLogin::deleteemp/$1');
 });
 
 $routes->group(
@@ -87,9 +87,9 @@ $routes->group(
 
 $routes->group('api/products', ['filter' => 'authFilter'], function ($routes) {
     $routes->post('create', 'Api\Product\ProductController::createProduct');
-    $routes->post('update', 'Api\Product\ProductController::updateProduct');
+    $routes->post('update/(:num)', 'Api\Product\ProductController::updateProduct/$1');
     $routes->post('getall', 'Api\Product\ProductController::getAllProduct');
-    $routes->post('delete', 'Api\Product\ProductController::deleteProduct');
+    $routes->post('delete/(:num)', 'Api\Product\ProductController::deleteProduct/$1');
 });
 
 

@@ -27,8 +27,10 @@ class ProductController extends BaseController
 
         $productData = [
             'ProductName' => $this->request->getVar('ProductName'),
-            'Description' => $this->request->getVar('Description'),
-            'MarketingMessage' => $this->request->getVar('MarketingMessage'),
+            'ProductCost' => $this->request->getVar('ProductCost'),
+            'ProductDescription' => $this->request->getVar('ProductDescription'),
+            'AMC' => $this->request->getVar('AMC'),
+            'GST' => $this->request->getVar('GST'),
             'CreatedBy' => $this->request->getVar('CreatedBy'),
             'CreatedOn' => date('Y-m-d'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
@@ -60,13 +62,15 @@ class ProductController extends BaseController
         $ProductModel = new ProductModel($db);
 
         $updateData = [
-            'ProductName'=> $this->request->getVar('ProductName'),
-            'Description'=> $this->request->getVar('Description'),
-            'MarketingMessage'=> $this->request->getVar('MarketingMessage'),
-            'CreatedBy'=> $this->request->getVar('CreatedBy'),
+          'ProductName' => $this->request->getVar('ProductName'),
+            'ProductCost' => $this->request->getVar('ProductCost'),
+            'ProductDescription' => $this->request->getVar('ProductDescription'),
+            'AMC' => $this->request->getVar('AMC'),
+            'GST' => $this->request->getVar('GST'),
+            'CreatedBy' => $this->request->getVar('CreatedBy'),
             'CreatedOn' => date('Y-m-d'),
-            'UpdatedBy'=> $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => date('Y-m-d'),
+            'UpdatedBy' => $this->request->getVar('UpdatedBy'),
+            'UpdatedOn' =>  date('Y-m-d'),
         ];
 
         if($ProductModel->update($id,$updateData)){

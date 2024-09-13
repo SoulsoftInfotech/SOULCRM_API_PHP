@@ -35,8 +35,8 @@ $routes->group(
 
 $routes->group('api/users', ['filter' => 'authFilter'], function ($routes) {
     $routes->post('getallemp', 'Api\User\UserLogin::getAllEmployee');
-    $routes->post('update/(:num)', 'Api\User\UserLogin::update/$1');
-    $routes->post('deleteemp/(:num)', 'Api\User\UserLogin::deleteemp/$1');
+    $routes->post('update/(:segment)', 'Api\User\UserLogin::update/$1');
+    $routes->post('deleteemp/(:segment)', 'Api\User\UserLogin::deleteemp/$1');
 });
 
 $routes->group(

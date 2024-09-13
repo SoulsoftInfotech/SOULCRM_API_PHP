@@ -80,8 +80,6 @@ $routes->group(
 
         //----------------------------------------followup data-------------------------//
         $routes->post('followup/(:num)', 'Api\Lead\CreateLeadController::followUpData/$1');
-
-        
     }
 );
 
@@ -94,4 +92,6 @@ $routes->group('api/products', ['filter' => 'authFilter'], function ($routes) {
 
 
 //-----------------------------Campaign Assignment------------------------
-$routes->post('api/assign/camp','Api\Assignment\AssignmentController::assignmentCampaign');
+$routes->group('api/assign', ['filter' => 'authFilter'], function ($routes) {
+    $routes->post('camp', 'Api\Assignment\AssignmentController::assignmentCampaign');
+});

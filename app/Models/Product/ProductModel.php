@@ -14,8 +14,10 @@ class ProductModel extends Model
     protected $protectFields    = true;
     protected $allowedFields = [
         'ProductName',
-        'Description',
-        'MarketingMessage',
+        'ProductCost',
+        'ProductDescription',
+        'AMC',
+        'GST',
         'CreatedBy',
         'CreatedOn',
         'UpdatedBy',

@@ -30,9 +30,9 @@ class ProductController extends BaseController
             'Description' => $this->request->getVar('Description'),
             'MarketingMessage' => $this->request->getVar('MarketingMessage'),
             'CreatedBy' => $this->request->getVar('CreatedBy'),
-            'CreatedOn' => $this->request->getVar('CreatedOn'),
+            'CreatedOn' => date('Y-m-d'),
             'UpdatedBy' => $this->request->getVar('UpdatedBy'),
-            'UpdatedOn' => $this->request->getVar('UpdatedOn')
+            'UpdatedOn' =>  date('Y-m-d'),
         ];
 
         if($ProductModel->save($productData)){

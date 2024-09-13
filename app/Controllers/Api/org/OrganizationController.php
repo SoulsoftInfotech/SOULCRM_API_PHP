@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Api\org;
+namespace App\Controllers\Api\Org;
 
 use App\Controllers\BaseController;
 use App\Models\org\OrganizationModel;

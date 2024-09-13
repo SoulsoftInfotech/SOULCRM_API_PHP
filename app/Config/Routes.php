@@ -15,58 +15,83 @@ use CodeIgniter\Router\RouteCollection;
 // );
 
 
-$routes->group("api/org",function($routes){
+$routes->group(
+    "api/org",
+    function ($routes) {
 
-    $routes->post('getdts','Api\org\OrganizationController::getorgdtls');
-}
+        $routes->post('getdts', 'Api\org\OrganizationController::getorgdtls');
+    }
 );
 
 
-$routes->group("api/users",function($routes){
+$routes->group(
+    "api/users",
+    function ($routes) {
 
-    $routes->post('createuser','Api\User\UserLogin::create');
-    $routes->post('login','Api\User\UserLogin::login');
-}
-);
-$routes->group("api/leads", ['filter' => 'authFilter'],function($routes){
-     
-    //-----------------------------create ,update,upload-----------------------//
-    $routes->post('save','Api\Lead\CreateLeadController::create');
-    $routes->post('leadsandcust','Api\Lead\CreateLeadController::getAllLeadswithCustomer');
-    $routes->post('leads','Api\Lead\CreateLeadController::getAllLeads');
-    $routes->post('lead/(:num)','Api\Lead\CreateLeadController::getLeadById/$1');
-    $routes->post('update/(:num)','Api\Lead\CreateLeadController::update/$1');
-    $routes->post('upload','Api\Lead\CreateLeadController::itemExcelUpload');
-    $routes->post('customers','Api\Lead\CreateLeadController::getAllCustomers');
-    $routes->post('customer/(:num)','Api\Lead\CreateLeadController::updateWithCustomer/$1');
-    $routes->post('getleadtype','Api\Lead\CreateLeadController::leadOptions');
-
-
-    //--------------------------get data of all types of booking -------------//
-    $routes->post('booking','Api\Lead\CreateLeadController::getAllBookingDone');
-    $routes->post('customer','Api\Lead\CreateLeadController::getAllCustomer');
-    $routes->post('dataentry','Api\Lead\CreateLeadController::getAllDataEntry');
-    $routes->post('visitrequired','Api\Lead\CreateLeadController::getAllVisitRequired');
-    $routes->post('installations','Api\Lead\CreateLeadController::getAllInstallation');
-    $routes->post('potentials','Api\Lead\CreateLeadController::getAllPotential');
-    $routes->post('demo','Api\Lead\CreateLeadController::getAllDemo');
-    $routes->post('callback','Api\Lead\CreateLeadController::getAllCallBack');
-    $routes->post('notinterested','Api\Lead\CreateLeadController::getAllNotInterested');
-
-
-    // -------------------------------count of lead types------------------------//
-    $routes->post('countlead','Api\Lead\CreateLeadController::countLeadstype');
-    $routes->post('countpotential','Api\Lead\CreateLeadController::countPotentialtype');
-    $routes->post('countinstallation','Api\Lead\CreateLeadController::countInstallationtype');
-    $routes->post('countbookingdone','Api\Lead\CreateLeadController::countBookingDonetype');
-
-    //---------------------------------count of all leads types---------------------//
-    $routes->post('countofall','Api\Lead\CreateLeadController::countAllTypes');
-
-
-    //----------------------------------------followup data-------------------------//
-    $routes->post('followup/(:num)','Api\Lead\CreateLeadController::followUpData/$1');
-}
+        $routes->post('createuser', 'Api\User\UserLogin::create');
+        $routes->post('login', 'Api\User\UserLogin::login');
+    }
 );
 
+$routes->group('api/users', ['filter' => 'authFilter'], function ($routes) {
+    $routes->post('getallemp', 'Api\User\UserLogin::getAllEmployee');
+    $routes->post('update', 'Api\User\UserLogin::update');
+    $routes->post('deleteemp', 'Api\User\UserLogin::deleteemp');
+});
 
+$routes->group(
+    "api/leads",
+    ['filter' => 'authFilter'],
+    function ($routes) {
+
+        //-----------------------------create ,update,upload-----------------------//
+        $routes->post('save', 'Api\Lead\CreateLeadController::create');
+        $routes->post('leadsandcust', 'Api\Lead\CreateLeadController::getAllLeadswithCustomer');
+        $routes->post('leads', 'Api\Lead\CreateLeadController::getAllLeads');
+        $routes->post('lead/(:num)', 'Api\Lead\CreateLeadController::getLeadById/$1');
+        $routes->post('update/(:num)', 'Api\Lead\CreateLeadController::update/$1');
+        $routes->post('upload', 'Api\Lead\CreateLeadController::itemExcelUpload');
+        $routes->post('customers', 'Api\Lead\CreateLeadController::getAllCustomers');
+        $routes->post('customer/(:num)', 'Api\Lead\CreateLeadController::updateWithCustomer/$1');
+        $routes->post('getleadtype', 'Api\Lead\CreateLeadController::leadOptions');
+
+
+        //--------------------------get data of all types of booking -------------//
+        $routes->post('booking', 'Api\Lead\CreateLeadController::getAllBookingDone');
+        $routes->post('customer', 'Api\Lead\CreateLeadController::getAllCustomer');
+        $routes->post('dataentry', 'Api\Lead\CreateLeadController::getAllDataEntry');
+        $routes->post('visitrequired', 'Api\Lead\CreateLeadController::getAllVisitRequired');
+        $routes->post('installations', 'Api\Lead\CreateLeadController::getAllInstallation');
+        $routes->post('potentials', 'Api\Lead\CreateLeadController::getAllPotential');
+        $routes->post('demo', 'Api\Lead\CreateLeadController::getAllDemo');
+        $routes->post('callback', 'Api\Lead\CreateLeadController::getAllCallBack');
+        $routes->post('notinterested', 'Api\Lead\CreateLeadController::getAllNotInterested');
+
+
+        // -------------------------------count of lead types------------------------//
+        $routes->post('countlead', 'Api\Lead\CreateLeadController::countLeadstype');
+        $routes->post('countpotential', 'Api\Lead\CreateLeadController::countPotentialtype');
+        $routes->post('countinstallation', 'Api\Lead\CreateLeadController::countInstallationtype');
+        $routes->post('countbookingdone', 'Api\Lead\CreateLeadController::countBookingDonetype');
+
+        //---------------------------------count of all leads types---------------------//
+        $routes->post('countofall', 'Api\Lead\CreateLeadController::countAllTypes');
+
+
+        //----------------------------------------followup data-------------------------//
+        $routes->post('followup/(:num)', 'Api\Lead\CreateLeadController::followUpData/$1');
+
+        
+    }
+);
+
+$routes->group('api/products', ['filter' => 'authFilter'], function ($routes) {
+    $routes->post('create', 'Api\Product\ProductController::createProduct');
+    $routes->post('update', 'Api\Product\ProductController::updateProduct');
+    $routes->post('getall', 'Api\Product\ProductController::getAllProduct');
+    $routes->post('delete', 'Api\Product\ProductController::deleteProduct');
+});
+
+
+//-----------------------------Campaign Assignment------------------------
+$routes->post('api/assign/camp','Api\Assignment\AssignmentController::assignCamp');

@@ -12,7 +12,7 @@ class UserLoginModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['EmpId', 'EmpCode', 'EmpName', 'Designation', 'LoginUserName', 'Password', 'Description', 'CreatedBy', 'CreatedOn', 'UpdatedBy', 'UpdatedOn'];
+    protected $allowedFields    = ['EmpCode', 'EmpName', 'Designation', 'LoginUserName', 'Password', 'Description', 'CreatedBy', 'CreatedOn', 'UpdatedBy', 'UpdatedOn'];
 
     // Dates
     protected $useTimestamps = false;

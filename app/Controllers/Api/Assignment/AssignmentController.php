@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\Api\Assignment\AssignmentController;
+namespace App\Controllers\Api\Assignment;
 
 use App\Controllers\BaseController;
 use App\Models\Lead\CreateLeadModel;

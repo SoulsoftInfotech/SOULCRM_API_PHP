@@ -174,6 +174,7 @@ class UserLogin extends BaseController
         log_message('info', 'Users fetched successfully: ' . print_r($users, true));
 
         return $this->response->setJSON([
+            'status' => 200,
             'data' => $users,
             'message' => 'All Employees',
         ]);
@@ -182,6 +183,7 @@ class UserLogin extends BaseController
         log_message('info', 'No users found.');
 
         return $this->response->setJSON([
+            'status' => 500,
             'data' => [],
             'message' => 'No Employees Found',
         ]);

@@ -94,4 +94,4 @@ $routes->group('api/products', ['filter' => 'authFilter'], function ($routes) {
 
 
 //-----------------------------Campaign Assignment------------------------
-$routes->post('api/assign/camp','Api\Assignment\AssignmentController::assignCamp');
+$routes->post('api/assign/camp','Api\Assignment\AssignmentController::assignmentCampaign');

@@ -226,13 +226,32 @@ public function update($empCode){
         'UpdatedOn' => date('Y-m-d H:i:s'),
     ];
 
-    $userLoginModel->update($employee['EmpId'],$updatedData);
+    // $userLoginModel->update($employee['EmpId'],$updatedData);
 
-    return $this->response->setJSON([
-       'status' => 200,
-        'data' => $updatedData,
-       'message' => 'Employee updated successfully',
-    ]);
+    // return $this->response->setJSON([
+    //    'status' => 200,
+    //     'data' => $updatedData,
+    //    'message' => 'Employee updated successfully',
+    // ]);
+
+    $result = $userLoginModel->where('EmpCode', $empCode)->update($employee['EmpId'],$updatedData);
+    // print_r($result);
+    // exit;
+    
+    if($result){
+        return $this->response->setJSON([
+           'status' => 200,
+            'data' => $updatedData,
+           'message' => 'Employee updated successfully',
+        ]);
+
+    }else{
+        return $this->response->setJSON([
+            'status' => 404,
+             'data' => $result,
+            'message' => 'Data not found!',
+         ]);
+    }
 }
 
 public function deleteemp($empcode){

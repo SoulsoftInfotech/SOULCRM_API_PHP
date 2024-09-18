@@ -50,4 +50,18 @@ class ProductModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    
+    protected $db; // Add this property to hold the dynamic database connection
+
+    // Constructor to accept a dynamic database connection
+    public function __construct($db = null)
+    {
+        parent::__construct();
+
+        // If a dynamic database connection is provided, use it
+        if ($db !== null) {
+            $this->db = $db;
+        }
+    }
 }

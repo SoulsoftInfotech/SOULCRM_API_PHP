@@ -17,8 +17,6 @@ class CampaignModel extends Model
         'CampaignName',
         'ContactNo',
         'Location',
-        'ProductId',
-        'LeadType',
         'Description',
         'HandlerEmp',
         'Image',

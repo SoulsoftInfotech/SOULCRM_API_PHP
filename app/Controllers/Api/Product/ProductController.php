@@ -125,7 +125,17 @@ class ProductController extends BaseController
         $db = \Config\Database::connect($dbconnectarray);
         $ProductModel = new ProductModel($db);
 
-        if($ProductModel->delete($id)){
+        $data=$ProductModel->where('Id',$id)->first();
+
+        if(empty($data)){
+            return $this->response->setJSON([
+                'status'=>404,
+               'message'=>'Product Not Found'
+            ]);
+        }
+        else{
+           $response= $ProductModel->where('Id',$id)->delete();
+        if($response){
             return $this->response->setJSON([
                 'status'=>200,
                'message'=>'Product Deleted Successfully'
@@ -135,8 +145,7 @@ class ProductController extends BaseController
             'status'=>500,
            'message'=>'Failed to Delete Product'
         ]);
-        
+    }   
 
     }
-
-}
+    }

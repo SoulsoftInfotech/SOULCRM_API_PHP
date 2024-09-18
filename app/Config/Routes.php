@@ -95,3 +95,13 @@ $routes->group('api/products', ['filter' => 'authFilter'], function ($routes) {
 $routes->group('api/assign', ['filter' => 'authFilter'], function ($routes) {
     $routes->post('camp', 'Api\Assignment\AssignmentController::assignmentCampaign');
 });
+
+
+//---------------------------Campaign Creation --------------------------------
+
+$routes->group('api/campaign', ['filter' => 'authFilter'], function ($routes) {
+    $routes->post('create', 'Api\Campaign\CampaignController::createCampaign');
+    $routes->post('update/(:num)', 'Api\Campaign\CampaignController::updateCampaign/$1');
+    $routes->post('getall', 'Api\Campaign\CampaignController::getAllCampaign');
+    $routes->post('delete/(:num)', 'Api\Campaign\CampaignController::deleteCampaign/$1');
+});

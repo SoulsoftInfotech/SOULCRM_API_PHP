@@ -7,7 +7,7 @@ use App\Controllers\Api\User\UserLogin;
 use App\Models\Campaign\CampaignModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class CampaignCreationController extends BaseController
+class CampaignController extends BaseController
 {
     public function index()
     {

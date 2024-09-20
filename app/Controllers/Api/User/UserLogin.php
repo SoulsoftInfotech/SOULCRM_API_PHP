@@ -30,7 +30,7 @@ class UserLogin extends BaseController
             'EmpId' => $this->request->getVar('EmpId'),
             'EmpCode' => $this->request->getVar('EmpCode'),   
             'EmpName' => $this->request->getVar('EmpName'),
-            'Designation' => $this->request->getVar('Designation'),
+            'LoginType' => $this->request->getVar('LoginType'),
             'LoginUserName' => $this->request->getVar('LoginUserName'),
             'Password' => $this->request->getVar('Password'),
             'Description' => $this->request->getVar('Description'),
@@ -91,7 +91,7 @@ class UserLogin extends BaseController
             $response = [
                 'msg' => 'User login successfully!',
                 'userid' => $user['EmpId'],
-                'designation'=>$user['Designation'],
+                'LoginType'=>$user['LoginType'],
                 'url' => 'http://localhost:8080/',
                 'type' => 'master',
                 'status' => 200,
@@ -218,7 +218,7 @@ public function update($empCode){
     $updatedData = [
         'EmpCode' => $this->request->getVar('EmpCode'),
         'EmpName' => $this->request->getVar('EmpName'),
-        'Designation' => $this->request->getVar('Designation'),
+        'LoginType' => $this->request->getVar('LoginType'),
         'LoginUserName' => $this->request->getVar('LoginUserName'),
         'Password' => $this->request->getVar('Password'),
         'Description' => $this->request->getVar('Description'),

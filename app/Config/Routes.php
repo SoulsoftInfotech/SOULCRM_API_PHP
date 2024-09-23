@@ -106,3 +106,7 @@ $routes->group('api/campaign', ['filter' => 'authFilter'], function ($routes) {
     $routes->post('getall', 'Api\Campaign\CampaignController::getAllCampaign');
     $routes->post('delete/(:num)', 'Api\Campaign\CampaignController::deleteCampaign/$1');
 });
+
+$routes->group('api/camp',['filter'=>'authFilter'], function($routes){
+    $routes->post('assigncamptoemp', 'Api\Assignment\AssignmentController::assignCampaignToEmployee');
+});

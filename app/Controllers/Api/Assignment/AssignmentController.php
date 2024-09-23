@@ -3,6 +3,8 @@
 namespace App\Controllers\Api\Assignment;
 
 use App\Controllers\BaseController;
+use App\Models\User\UserLoginModel;
+use App\Models\Campaign\CampaignModel;
 use App\Models\Lead\CreateLeadModel;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Controllers\Api\User\UserLogin;
@@ -50,4 +52,78 @@ class AssignmentController extends BaseController
         }
 
     }
+
+
+    public function assignCampaignToEmployee(){
+        // Assign campaign to employee using provided campaign and employee IDs
+        $dbname = $this->request->getVar('DBNAME');
+       $uname = $this->request->getVar('UNAME');
+       $pass = $this->request->getVar('PASS');
+       $host = $this->request->getVar('HOST');
+
+       $connect=new UserLogin();
+       $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+       $db = \Config\Database::connect($dbconnectarray);
+      
+       $campaign = new CampaignModel($db);
+
+       $campaignId = $this->request->getVar('CampaignId');
+       $HandlerEmpId	 = $this->request->getVar('HandlerEmpId');
+
+       if(empty($campaignId) || empty($HandlerEmpId	)){
+           return $this->response->setJSON([
+              'status' => 400,
+              'message' => 'CampaignId and EmployeeId are required',
+           ]);  // Return Bad Request status code and message  // Bad Request status code is 400.  // Bad Request is a client-side error, meaning the request could not be understood by the server.  // The server responded with a
+       }
+       $campaignData = $campaign->find($campaignId);
+       if (!$campaignData) {
+           return $this->response->setJSON([
+              'status' => 404,
+              'message' => 'Campaign not found',
+           ]);
+       }
+      
+       $result = $campaign->where('CampaignId', $campaignId)
+                  ->set('HandlerEmpId', $HandlerEmpId	)
+                  ->update();  // This executes the update query
+            // Attempt to update the EmployeeId for the given CampaignId
+       //  $result = $campaign->update($campaignId, ['EmployeeId' => $employeeId]);
+
+
+
+
+
+
+       $getEmpEmployee = new UserLoginModel($db);
+       $employeename = $getEmpEmployee->where('Id', $HandlerEmpId)
+                              ->select('LoginUserName')
+                              ->first(); // Fetches the first matching row
+       
+       $empname=$employeename['LoginUserName'];
+
+       $campaign->where('CampaignId', $campaignId)
+                ->set('HandlerEmp', $empname)  // Update the HandlerEmpName in the campaign table with the Employee Name
+                ->update(); // This executes the update query
+
+
+
+
+
+
+       if($result){
+           return $this->response->setJSON([
+               'status' => 200,
+              'message' => 'Employee assigned to Campaign successfully',
+               'data'=>$campaign->find($campaignId)
+           ]);
+       }
+       else{
+           return $this->response->setJSON([
+               'status' => 500,
+              'message' => 'Failed to assign Employee to Campaign',
+           ]);
+       }
+    }
+    
 }

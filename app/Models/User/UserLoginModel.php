@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class UserLoginModel extends Model
 {
     protected $table            = 'Employees';
-    protected $primaryKey       = 'EmpId';
+    protected $primaryKey       = 'Id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['EmpCode', 'EmpName', 'LoginType', 'LoginUserName', 'Password', 'Description', 'CreatedBy', 'CreatedOn', 'UpdatedBy', 'UpdatedOn'];
+    protected $allowedFields    = ['EmpId','EmpCode', 'EmpName', 'LoginType', 'LoginUserName', 'Password', 'Description', 'CreatedBy', 'CreatedOn', 'UpdatedBy', 'UpdatedOn'];
 
     // Dates
     protected $useTimestamps = false;

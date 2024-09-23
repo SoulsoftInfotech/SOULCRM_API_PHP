@@ -92,6 +92,7 @@ class UserLogin extends BaseController
                 'msg' => 'User login successfully!',
                 'userid' => $user['EmpId'],
                 'LoginType' => $user['LoginType'],
+                'Id'=>$user['Id'],
                 'url' => 'http://localhost:8080/',
                 'type' => 'master',
                 'status' => 200,

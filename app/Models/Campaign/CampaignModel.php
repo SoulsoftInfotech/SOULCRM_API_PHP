@@ -14,10 +14,11 @@ class CampaignModel extends Model
     protected $protectFields    = true;
    
     protected $allowedFields = [
-        'CampaignName',
+       'CampaignName',
         'ContactNo',
         'Location',
         'Description',
+        'HandlerEmpId',
         'HandlerEmp',
         'Image',
         'Video',

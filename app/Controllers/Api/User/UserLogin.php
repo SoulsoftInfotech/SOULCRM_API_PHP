@@ -235,7 +235,8 @@ class UserLogin extends BaseController
         //    'message' => 'Employee updated successfully',
         // ]);
 
-        $result = $userLoginModel->where('Id', $empCode)->update($employee['Id'], $updatedData);
+        // $result = $userLoginModel->where('Id', $empCode)->update($employee['Id'], $updatedData);
+        $result = $userLoginModel->where('Id', $empCode)->set($updatedData)->update();
         // print_r($result);
         // exit;
 

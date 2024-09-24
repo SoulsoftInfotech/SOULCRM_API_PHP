@@ -340,5 +340,49 @@ class UserLogin extends BaseController
                 ]);
             }
         }
-    
+        public function changePassword($id)
+        {
+            $dbname = $this->request->getVar('DBNAME');
+            $uname = $this->request->getVar('UNAME');
+            $pass = $this->request->getVar('PASS');
+            $host = $this->request->getVar('HOST');
+        
+            // Generate the database connection array
+            $dbconnectarray = $this->generateDBarray($dbname, $uname, $pass, $host);
+            
+            // Create a new database connection using the generated array
+            $db = \Config\Database::connect($dbconnectarray);
+        
+            // Pass the custom database connection to the model
+            $userLoginModel = new UserLoginModel($db);
+        
+            // Get the password inputs
+            $oldPassword = $this->request->getVar('oldpassword');
+            $newPassword = $this->request->getVar('newpassword');
+            $confirmPassword = $this->request->getVar('confirmpassword');
+        
+            // Validate passwords
+            if ($newPassword !== $confirmPassword) {
+                return $this->response->setJSON(['status' => 'error', 'message' => 'New passwords do not match!']);
+            }
+        
+            // Retrieve the user by ID
+            $user = $userLoginModel->where('Id', $id)->first();
+        
+            // Check if the user exists and the old password is correct
+            if ($user && $user['Password'] === $oldPassword) {
+                // Set the new password
+                $user['Password'] = $newPassword;
+        
+                // Save the updated user back to the database
+                if ($userLoginModel->update($id, $user)) {
+                    return $this->response->setJSON(['status' => 200, 'message' => 'Password updated successfully!','data'=>$user]);
+                } else {
+                    return $this->response->setJSON(['status' => 500, 'message' => 'Error updating password.']);
+                }
+            } else {
+                return $this->response->setJSON(['status' => 500, 'message' => 'Current password is incorrect!']);
+            }
+        }
+        
 }

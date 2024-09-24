@@ -880,4 +880,36 @@ public function followUpData($id){
     }
 
 }
+
+
+public function getleadsbycampaignId($id){
+    $dbname = $this->request->getVar('DBNAME');
+    $uname = $this->request->getVar('UNAME');
+    $pass = $this->request->getVar('PASS');
+    $host = $this->request->getVar('HOST');
+    
+    $connect=new UserLogin();
+    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+    $db = \Config\Database::connect($dbconnectarray);
+
+    $CreateLeadModel = new CreateLeadModel($db);
+
+    $data=$CreateLeadModel->where('Campaign',$id)->findAll();
+
+    if($data){
+        return $this->response->setJSON([
+            'status'=>200,
+            'message'=>'Leads retrieved successfully for campaign ID',
+            'data'=>$data
+        ]);
+    }
+    else{
+        return $this->response->setJSON([
+            'status'=>404,
+            'message'=>'No data found for campaign ID',
+            'data'=>0
+        ]);
+    }
+
+}
 }

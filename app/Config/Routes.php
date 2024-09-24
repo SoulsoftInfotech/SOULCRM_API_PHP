@@ -82,6 +82,9 @@ $routes->group(
 
         //----------------------------------------followup data-------------------------//
         $routes->post('followup/(:num)', 'Api\Lead\CreateLeadController::followUpData/$1');
+
+        //------------------------------------lead by Campaign Id --------------------------//
+        $routes->post('getleadsbycamp/(:num)', 'Api\Lead\CreateLeadController::getleadsbycampaignId/$1');
     }
 );
 
@@ -110,4 +113,9 @@ $routes->group('api/campaign', ['filter' => 'authFilter'], function ($routes) {
 
 $routes->group('api/camp',['filter'=>'authFilter'], function($routes){
     $routes->post('assigncamptoemp', 'Api\Assignment\AssignmentController::assignCampaignToEmployee');
+});
+
+$routes->group('api/followup',['filter'=>'authFilter'], function($routes){
+    $routes->post('getfollowupbyid/(:num)', 'Api\FollowUp\FollowUpController::getfollowupdata/$1');
+    $routes->post('create', 'Api\FollowUp\FollowUpController::create');
 });

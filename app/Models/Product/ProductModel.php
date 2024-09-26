@@ -64,4 +64,9 @@ class ProductModel extends Model
             $this->db = $db;
         }
     }
+    public function countProduct()
+    {
+        $productCount = $this->countAllResults(); // Count all rows in the table without executing a query
+        return $productCount;
+    }
 }

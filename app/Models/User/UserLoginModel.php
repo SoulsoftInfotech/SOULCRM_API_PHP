@@ -64,4 +64,10 @@ class UserLoginModel extends Model
     // }
 
     // Optional: Implement dynamic database connection if needed
+
+    public function countEmp()
+    {
+        $empCount = $this->countAllResults(); // Count all rows in the table without executing a query
+        return $empCount;
+    }
 }

@@ -6,6 +6,9 @@ use App\Controllers\Api\User\UserLogin;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Lead\CreateLeadModel;
+use App\Models\User\UserLoginModel;
+use App\Models\Campaign\CampaignModel;
+use App\Models\Product\ProductModel;
 use App\Models\Lead\CustomerModel;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 
@@ -820,36 +823,93 @@ public function countBookingDonetype(){
 }
 
 
-public function countAllTypes(){
+public function countAllTypes()
+    {
+        $dbname = $this->request->getVar('DBNAME');
+        $uname = $this->request->getVar('UNAME');
+        $pass = $this->request->getVar('PASS');
+        $host = $this->request->getVar('HOST');
 
-    $dbname = $this->request->getVar('DBNAME');
-    $uname = $this->request->getVar('UNAME');
-    $pass = $this->request->getVar('PASS');
-    $host = $this->request->getVar('HOST');
+        $connect = new UserLogin();
+        $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+        $db = \Config\Database::connect($dbconnectarray);
 
-    $connect=new UserLogin();
-    $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
-    $db = \Config\Database::connect($dbconnectarray);
+        $CreateLeadModel = new CreateLeadModel($db);
+        $productModel = new ProductModel($db);
+        $empModel = new UserLoginModel($db);
+        $campaignModel = new CampaignModel($db);
 
-    $CreateLeadModel = new CreateLeadModel($db);
-    $number=$CreateLeadModel->countAllTypes();
-    if($number){
-        return $this->response->setJSON(
-            [
-                'status'=>200,
-                'message'=>'Count of all type of leads are as follows',
-                'data'=>$number
-            ]
+        $productCount = $productModel->countProduct(); // Assuming this returns a number or array
+        $empCount = $empModel->countEmp(); // Assuming this returns a number or array
+        $leadCounts = $CreateLeadModel->countAllTypes(); // Assuming this returns an associative array
+        $countCampaign = $campaignModel->countCampaign(); // Assuming this returns an associative array
+
+        // Check if $leadCounts is an array, if not, initialize it as an empty array
+        if (!is_array($leadCounts)) {
+            $leadCounts = [];
+        }
+
+        // Combine data into a single associative array
+        $data = [
+            'empCount' => $empCount,
+            'productCount' => $productCount,
+            'countCampaign' => $countCampaign,
+            'leads' => $leadCounts['leads'] ?? 0,
+            'potential' => $leadCounts['potential'] ?? 0,
+            'installation' => $leadCounts['installation'] ?? 0,
+            'bookingDone' => $leadCounts['bookingDone'] ?? 0,
+        ];
+
+        // Now, encode the combined data into a single JSON object
+        $number = json_encode($data);
+        // Now concatenate the two strings
+        // $number = $productCountString . $leadCountsString;
+        if ($number) {
+            return $this->response->setJSON(
+                [
+                    'status' => 200,
+                    'message' => 'Count of all type of leads are as follows',
+                    'data' => $number
+                ]
             );
+        } else {
+            return $this->response->setJSON([
+                'status' => 404,
+                'message' => 'No Data Found For All Types',
+                'data' => $number
+            ]);
+        }
     }
-    else{
-        return $this->response->setJSON([
-            'status'=>404,
-            'message'=>'No Data Found For All Types',
-            'data'=>$number
-        ]);
-    }
-}
+// public function countAllTypes(){
+
+//     $dbname = $this->request->getVar('DBNAME');
+//     $uname = $this->request->getVar('UNAME');
+//     $pass = $this->request->getVar('PASS');
+//     $host = $this->request->getVar('HOST');
+
+//     $connect=new UserLogin();
+//     $dbconnectarray = $connect->generateDBarray($dbname, $uname, $pass, $host);
+//     $db = \Config\Database::connect($dbconnectarray);
+
+//     $CreateLeadModel = new CreateLeadModel($db);
+//     $number=$CreateLeadModel->countAllTypes();
+//     if($number){
+//         return $this->response->setJSON(
+//             [
+//                 'status'=>200,
+//                 'message'=>'Count of all type of leads are as follows',
+//                 'data'=>$number
+//             ]
+//             );
+//     }
+//     else{
+//         return $this->response->setJSON([
+//             'status'=>404,
+//             'message'=>'No Data Found For All Types',
+//             'data'=>$number
+//         ]);
+//     }
+// }
 
 public function followUpData($id){
     $dbname = $this->request->getVar('DBNAME');

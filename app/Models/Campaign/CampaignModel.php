@@ -64,4 +64,9 @@ class CampaignModel extends Model
             $this->db = $db;
         }
     }
+    public function countCampaign()
+    {
+        $campaignCount = $this->countAllResults(); // Count all rows in the table without executing a query
+        return $campaignCount;
+    }
 }
